@@ -9,7 +9,7 @@
 return [
 	'default_connection' => 'main',
 	'main' => [
-		'filename' => BASE_PATH.'/data/note.db',
+		'filename' => BASE_PATH.'/data/note/main.db',
 		'driver' => 'sqlite3',
 		/**
 		 * Optional flags used to determine how to open the SQLite database
