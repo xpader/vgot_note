@@ -18,7 +18,15 @@ class IndexController extends Controller
 		echo 'Hello World';
 
 		$app = getApp();
-		$data = $app->db->from('notes')->fetchAll();
+
+		$data = $app->cache->get('test');
+
+		if ($data === null) {
+			$data = $app->db->from('notes')->fetchAll();
+			$app->cache->set('test', $data, 3600);
+			echo '---Refresh Cache---';
+		}
+
 		print_r($data);
 	}
 

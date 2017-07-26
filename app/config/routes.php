@@ -15,7 +15,7 @@ return [
 	 * @var string|false
 	 */
 	'case_symbol' => '-',
-	'ucfirst' => true,
+	'ucfirst' => false,
 	'route_maps' => [
 		'd/(\d+)' => 'index/case-act/$1'
 	]

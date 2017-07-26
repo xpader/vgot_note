@@ -8,7 +8,9 @@
 
 use vgot\Boot;
 
-define('BASE_PATH', __DIR__); //constant only for app
+//constant only for app
+define('BASE_PATH', __DIR__);
+define('DATA_DIR', __DIR__.'/data');
 
 ini_set('display_errors', 'On');
 ini_set('error_reporting', E_ALL);
