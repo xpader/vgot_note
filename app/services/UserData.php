@@ -11,7 +11,7 @@ class UserData {
 
 	private static $dbConnections = [];
 
-	public static function getUserDir($uid)
+	public static function dir($uid)
 	{
 		return DATA_DIR.'/note/user/'.$uid;
 	}
@@ -26,7 +26,7 @@ class UserData {
 	public static function db($uid)
 	{
 		if (!isset(self::$dbConnections[$uid])) {
-			$userDir = self::getUserDir($uid);
+			$userDir = self::dir($uid);
 
 			$config = [
 				'filename' => $userDir.'/note.db',

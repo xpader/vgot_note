@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\User;
 use vgot\Core\Controller;
 
 /**
@@ -28,6 +29,25 @@ class IndexController extends Controller
 		}
 
 		print_r($data);
+	}
+
+	public function user()
+	{
+		$app = getApp();
+
+		echo $app->user->getId();
+
+		print_r($this->user->info);
+	}
+
+	public function login()
+	{
+		$app = getApp();
+
+		$user = User::findById(1);
+		print_r($user);
+
+		var_dump($app->user->login($user));
 	}
 
 }

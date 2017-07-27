@@ -1,5 +1,7 @@
 <?php
 
+namespace app\components;
+
 /**
  * Created by PhpStorm.
  * User: pader
@@ -8,5 +10,10 @@
  */
 class Controller extends \vgot\Core\Controller
 {
+
+	//public function __construct()
+	//{
+	//	parent::__construct();
+	//}
 
 }

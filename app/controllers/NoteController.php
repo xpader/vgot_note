@@ -8,16 +8,16 @@
 
 namespace app\controllers;
 
+use app\com\Controller;
 use app\services\Note;
 use app\services\UserData;
-use vgot\Core\Controller;
 
 class NoteController extends Controller
 {
 
 	public function userdb()
 	{
-		$db = UserData::db(2);
+		$db = UserData::db(1);
 		print_r($db);
 	}
 

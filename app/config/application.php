@@ -20,6 +20,13 @@ return [
 					'cache_in_memory' => true
 				]
 			]
+		],
+		'user' => [
+			'app\components\User', [
+				'vnote_grant',
+				86400,
+				true
+			]
 		]
 	],
 
