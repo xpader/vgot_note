@@ -65,6 +65,8 @@ class User
 
 		if ($data) {
 			$this->setUser($data['user']);
+			$this->loginIp = $data['loginIp'];
+			$this->loginTime = $data['loginTime'];
 
 			//自动延续登录时，若登录有效期剩余不到1/4，则重新延续登录
 			if ($this->autoContinue && $this->validTime > 0 &&
