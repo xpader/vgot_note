@@ -3,7 +3,6 @@
 namespace app\controllers;
 
 use app\components\User;
-use vgot\Core\Controller;
 
 /**
  * Created by PhpStorm.
@@ -11,8 +10,20 @@ use vgot\Core\Controller;
  * Date: 2017/7/25
  * Time: 14:56
  */
-class IndexController extends Controller
+class IndexController extends \app\components\Controller
 {
+
+	public function init()
+	{
+		$app = getApp();
+		$action = $app->input->uri('action');
+
+		if (in_array($action, ['login'])) {
+			$this->requireLogin = false;
+		}
+
+		parent::init();
+	}
 
 	public function index()
 	{
@@ -42,12 +53,7 @@ class IndexController extends Controller
 
 	public function login()
 	{
-		$app = getApp();
-
-		$user = User::findById(1);
-		print_r($user);
-
-		var_dump($app->user->login($user));
+		$this->render('index/login');
 	}
 
 }

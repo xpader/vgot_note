@@ -7,5 +7,6 @@
  */
 return [
 	'site_name' => 'Vgot-Note',
-	'password_hash' => '$2y$10$STXeeH7yORXQ7tQVUwg3lOs4Us1j9xb8oscPvQViM0w/4pTSgn.ky'
+	'password_hash' => '$2y$10$STXeeH7yORXQ7tQVUwg3lOs4Us1j9xb8oscPvQViM0w/4pTSgn.ky',
+	'static_url' => 'static/'
 ];

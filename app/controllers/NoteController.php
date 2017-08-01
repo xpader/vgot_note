@@ -8,11 +8,10 @@
 
 namespace app\controllers;
 
-use app\com\Controller;
 use app\services\Note;
 use app\services\UserData;
 
-class NoteController extends Controller
+class NoteController extends \app\components\Controller
 {
 
 	public function userdb()
