@@ -41,5 +41,19 @@ return [
 	 *
 	 * @var callable
 	 */
-	'set_error_handler' => null
+	'set_error_handler' => null,
+
+	'on_boot' => function() {
+		$app = getApp();
+		$app->config->load('setting');
+
+		//static url
+		$staticUrl = $app->config->get('static_url');
+
+		if (!preg_match('#^(https?\:)?\/\/#', $staticUrl)) {
+			$staticUrl = \vgot\Web\Url::base().$staticUrl;
+		}
+
+		define('STATIC_URL', $staticUrl);
+	}
 ];

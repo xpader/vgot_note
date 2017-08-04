@@ -7,20 +7,41 @@
  *
  * @var $exception Exception
  */
+
+$this->title = htmlspecialchars($exception->getMessage());
+$this->render('common/header');
 ?>
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<meta charset="utf-8">
-<title><?=htmlspecialchars($exception->getMessage())?></title>
-<style type="text/css">
-body {margin:50px; background-color:#EEE; color:#505050; font-family:Arial,sans-serif;}
-h1 {color:#F00;}
-pre {background-color:#FFF; padding:10px; overflow:auto; font-size:14px;}
-</style>
-</head>
-<body>
-<h1>500 Internal Server Error</h1>
-<pre><?php throw $exception; ?></pre>
+<body class="hold-transition skin-blue sidebar-collapse">
+<div class="wrapper">
+
+	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+		<!-- Main content -->
+		<section class="content">
+
+			<div class="error-page">
+				<h2 class="headline text-red">500</h2>
+
+				<div class="error-content">
+					<h3><i class="fa fa-warning text-red"></i> Oops! Something went wrong.</h3>
+
+					<p>
+						We will work on fixing that right away.
+						Meanwhile, you may <a href="../../index.html">return to dashboard</a> or try using the search form.
+					</p>
+				</div>
+			</div>
+			<!-- /.error-page -->
+
+		</section>
+		<!-- /.content -->
+		<pre><?php throw $exception; ?></pre>
+	</div>
+
+</div>
+<!-- ./wrapper -->
+
+<!-- Bootstrap 3.3.7 -->
+<script src="<?=STATIC_URL?>lib/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

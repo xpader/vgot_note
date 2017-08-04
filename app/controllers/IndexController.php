@@ -53,6 +53,7 @@ class IndexController extends \app\components\Controller
 
 	public function login()
 	{
+		throw new \ErrorException('WTF');
 		$this->render('index/login');
 	}
 
