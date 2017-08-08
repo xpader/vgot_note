@@ -1,4 +1,6 @@
 <?php
+use vgot\Web\Url;
+
 $this->title = 'Login';
 $this->render('common/header');
 ?>
@@ -61,9 +63,9 @@ $(function () {
 	$(document.forms[0]).submit(function() {
 		var username = this.username.value;
 		var password = this.password.value;
-		$.post("./login-post", $(this).serialize()).done(function(res) {
+		$.post("<?=Url::site('index/login-post')?>", $(this).serialize(), function(res) {
 			if (res.status) {
-				location.href = "<?=\vgot\Web\Url::base()?>";
+				location.href = "<?=Url::base()?>";
 			} else {
 				alert(res.msg);
 			}

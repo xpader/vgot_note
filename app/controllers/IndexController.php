@@ -18,7 +18,7 @@ class IndexController extends \app\components\Controller
 		$app = getApp();
 		$action = $app->input->uri('action');
 
-		if (in_array($action, ['login'])) {
+		if (in_array($action, ['login', 'loginPost'])) {
 			$this->requireLogin = false;
 		}
 
@@ -61,6 +61,10 @@ class IndexController extends \app\components\Controller
 		$app = getApp();
 		$username = $app->input->post('username', '');
 		$password = $app->input->post('password', '');
+
+		if ($username == '' || $password == '') {
+			ajaxError('请输入用户名密码!');
+		}
 
 		$user = $app->db->from('user')->where(['username'=>$username])->fetch();
 

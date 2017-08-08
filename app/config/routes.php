@@ -18,7 +18,7 @@ return [
 	 * PATH_INFO, QUERY_STRING, GET
 	 */
 	'route_method' => 'PATH_INFO',
-	'suffix' => '.html',
+	'suffix' => '',
 
 	/**
 	 * Set case symbol in url
