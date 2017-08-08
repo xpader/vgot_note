@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\components\User;
+use app\services\Category;
 
 /**
  * Created by PhpStorm.
@@ -27,7 +28,10 @@ class IndexController extends \app\components\Controller
 
 	public function index()
 	{
-		$this->render('index/workflow');
+		$app = getApp();
+		$categories = Category::fetchCategories($app->user->id);
+		print_r($categories);
+		$this->render('index/workflow', compact('categories'));
 	}
 
 	public function user()
