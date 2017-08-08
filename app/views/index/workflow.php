@@ -9,6 +9,7 @@ $this->title = 'VgotNOTE';
 $this->render('common/header');
 ?>
 <body class="hold-transition skin-blue sidebar-mini">
+<link rel="stylesheet" href="<?=STATIC_URL?>lib/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 <div class="wrapper">
 
 	<?php $this->render('common/top'); ?>
@@ -100,12 +101,10 @@ $this->render('common/header');
 <script src="<?=STATIC_URL?>lib/bootstrap/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="<?=STATIC_URL?>lib/alte/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../../dist/js/demo.js"></script>
 <!-- CK Editor -->
-<script src="../../bower_components/ckeditor/ckeditor.js"></script>
+<script src="<?=STATIC_URL?>lib/ckeditor/ckeditor.js"></script>
 <!-- Bootstrap WYSIHTML5 -->
-<script src="../../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+<script src="<?=STATIC_URL?>lib/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
 <script>
 $(function () {
 	// Replace the <textarea id="editor1"> with a CKEditor
