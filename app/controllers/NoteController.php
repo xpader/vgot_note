@@ -26,4 +26,13 @@ class NoteController extends \app\components\Controller
 		print_r($notes);
 	}
 
+	public function html()
+	{
+		$dirty_html = 'sdsadfsfsdfsafs<script>alert(\'asdf\');</script>&lt;script&gt;<p></p>aaa';
+
+		$clean_html = Note::purifier($dirty_html);
+
+		echo $clean_html;
+	}
+
 }

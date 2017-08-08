@@ -25,7 +25,9 @@ class Controller extends \vgot\Core\Controller
 		$user = getApp()->user;
 
 		if ($user->isGuest) {
-			echo '[LOGIN REQUIRED]';
+			$loginUrl = Url::site('login');
+			header('Location: '.$loginUrl);
+			exit;
 		}
 	}
 

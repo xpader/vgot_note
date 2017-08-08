@@ -10,6 +10,16 @@ return [
 	'default_action' => 'index',
 	'404_override' => false,
 	'404_view' => 'errors/404',
+
+	/**
+	 * Router method
+	 *
+	 * Router base on uri params, this configure is setting what type of params use for router.
+	 * PATH_INFO, QUERY_STRING, GET
+	 */
+	'route_method' => 'PATH_INFO',
+	'suffix' => '.html',
+
 	/**
 	 * Set case symbol in url
 	 * @var string|false
@@ -17,6 +27,6 @@ return [
 	'case_symbol' => '-',
 	'ucfirst' => false,
 	'route_maps' => [
-		'd/(\d+)' => 'index/case-act/$1'
+		'login' => 'index/login'
 	]
 ];

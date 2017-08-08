@@ -9,6 +9,7 @@
 return [
 	'id' => 'Note',
 	'base_url' => 'http://127.0.0.1/dev/vgot_note/',
+	'entry_file' => 'index.php',
 
 	//The providers to register
 	'providers' => [
@@ -21,13 +22,7 @@ return [
 				]
 			]
 		],
-		'user' => [
-			'app\components\User', [
-				'vnote_grant',
-				86400,
-				true
-			]
-		]
+		'user' => ['app\components\User', ['vnote_grant', 86400*7, true]]
 	],
 
 	//Output
@@ -55,5 +50,7 @@ return [
 		}
 
 		define('STATIC_URL', $staticUrl);
+
+		require_once __DIR__.'/../components/common.php';
 	}
 ];

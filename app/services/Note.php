@@ -18,4 +18,26 @@ class Note
 		return $db->from('notes')->fetchAll();
 	}
 
+	public static function purifier($html)
+	{
+		static $purifier;
+
+		if (empty($purifier)) {
+			$config = \HTMLPurifier_Config::createDefault();
+			$config->set('AutoFormat.RemoveEmpty', true);
+			$config->set('AutoFormat.RemoveSpansWithoutAttributes', true);
+			$config->set('AutoFormat.RemoveEmpty.Predicate', [
+				'p' => [],
+				'colgroup' => [],
+				'th' => [],
+				'td' => [],
+				'iframe' => ['src'],
+			]);
+
+			$purifier = new \HTMLPurifier($config);
+		}
+
+		return $purifier->purify($html);
+	}
+
 }

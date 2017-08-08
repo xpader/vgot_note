@@ -53,8 +53,24 @@ class IndexController extends \app\components\Controller
 
 	public function login()
 	{
-		throw new \ErrorException('WTF');
 		$this->render('index/login');
+	}
+
+	public function loginPost()
+	{
+		$app = getApp();
+		$username = $app->input->post('username', '');
+		$password = $app->input->post('password', '');
+
+		$user = $app->db->from('user')->where(['username'=>$username])->fetch();
+
+		if (!$user || !password_verify($password, $user['password'])) {
+			ajaxError('用户不存在或密码错误！');
+		}
+
+		$app->user->login($user);
+
+		ajaxSuccess();
 	}
 
 }
