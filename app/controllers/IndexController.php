@@ -27,19 +27,7 @@ class IndexController extends \app\components\Controller
 
 	public function index()
 	{
-		echo 'Hello World';
-
-		$app = getApp();
-
-		$data = $app->cache->get('test');
-
-		if ($data === null) {
-			$data = $app->db->from('notes')->fetchAll();
-			$app->cache->set('test', $data, 3600);
-			echo '---Refresh Cache---';
-		}
-
-		print_r($data);
+		$this->render('index/workflow');
 	}
 
 	public function user()

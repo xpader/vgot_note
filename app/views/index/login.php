@@ -46,8 +46,6 @@ $this->render('common/header');
 </div>
 <!-- /.login-box -->
 
-<!-- jQuery 3 -->
-<script src="<?=STATIC_URL?>lib/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="<?=STATIC_URL?>lib/bootstrap/js/bootstrap.min.js"></script>
 <!-- iCheck -->
