@@ -27,4 +27,6 @@
 <script src="<?=STATIC_URL?>lib/jquery.min.js"></script>
 <!-- Google Font -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+<link rel="stylesheet" href="<?=STATIC_URL?>lib/pace/pace.css">
+<script src="<?=STATIC_URL?>lib/pace/pace.min.js"></script>
 </head>

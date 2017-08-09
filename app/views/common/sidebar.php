@@ -1,3 +1,6 @@
+<?php
+use vgot\Web\Url;
+?>
 <!-- Left side column. contains the logo and sidebar -->
 <aside class="main-sidebar">
 	<!-- sidebar: style can be found in sidebar.less -->
@@ -146,6 +149,13 @@
 					<li><a href="../examples/pace.html"><i class="fa fa-circle-o"></i> Pace Page</a></li>
 				</ul>
 			</li>
+			<li class="treeview active menu-open">
+				<a href="javascript:;">
+					<i class="fa fa-folder"></i> <span>目录</span>
+					<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+				</a>
+				<ul class="treeview-menu" id="categoryFolders"></ul>
+			</li>
 			<li class="treeview">
 				<a href="#">
 					<i class="fa fa-share"></i> <span>Multilevel</span>
@@ -188,3 +198,18 @@
 	</section>
 	<!-- /.sidebar -->
 </aside>
+<script type="text/javascript">
+function showCategoryFolders() {
+	$.get("<?=Url::site('category/get-categories')?>").done(function(res) {
+		var html = '';
+		for (var i=0,row; row=res[i]; i++) {
+			html += '<li><a href="../examples/invoice.html"><i class="fa fa-circle-o"></i> ' + row.name + '</a></li>';
+		}
+		$("#categoryFolders").html(html);
+	});
+}
+
+$(function() {
+	showCategoryFolders();
+});
+</script>

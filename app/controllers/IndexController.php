@@ -29,8 +29,6 @@ class IndexController extends \app\components\Controller
 	public function index()
 	{
 		$app = getApp();
-		$categories = Category::fetchCategories($app->user->id);
-		print_r($categories);
 		$this->render('index/workflow', compact('categories'));
 	}
 
