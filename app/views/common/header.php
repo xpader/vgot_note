@@ -1,3 +1,11 @@
+<?php
+use vgot\Web\Url;
+
+$baseUrl = Url::site('');
+if (substr($baseUrl, -1) != '/') {
+	$baseUrl .= '/';
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,4 +37,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 <link rel="stylesheet" href="<?=STATIC_URL?>lib/pace/pace.css">
 <script src="<?=STATIC_URL?>lib/pace/pace.min.js"></script>
+<script type="text/javascript">
+var BASE_URL = "<?=$baseUrl?>";
+</script>
 </head>

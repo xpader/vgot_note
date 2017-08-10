@@ -12,6 +12,15 @@ namespace app\services;
 class Note
 {
 
+	public static function fetchList($uid, $cateId=null)
+	{
+		$db = UserData::db($uid);
+		$cateId && $db->where(['cate_id'=>$cateId]);
+
+		return $db->select('note_id,cate_id,title,summary,created_at,updated_at')
+			->from('notes')->orderBy(['updated_at'=>SORT_DESC])->fetchAll();
+	}
+
 	public static function getNotes($uid)
 	{
 		$db = UserData::db($uid);

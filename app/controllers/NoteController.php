@@ -8,6 +8,7 @@
 
 namespace app\controllers;
 
+use app\services\Category;
 use app\services\Note;
 use app\services\UserData;
 
@@ -33,6 +34,27 @@ class NoteController extends \app\components\Controller
 		$clean_html = Note::purifier($dirty_html);
 
 		echo $clean_html;
+	}
+
+	public function getNoteList()
+	{
+		$app = getApp();
+		$cid = $app->input->get('cid');
+
+		$notes = Note::fetchList($app->user->id, $cid);
+
+		if ($cid) {
+			$category = Category::getCategory($app->user->id, $cid);
+		} else {
+			$category = null;
+		}
+
+		array_walk($notes, function(&$row) {
+			$row['created_at'] = date('Y-m-d H:i:s', $row['created_at']);
+			$row['updated_at'] = date('Y-m-d H:i:s', $row['updated_at']);
+		});
+
+		$app->output->json(compact('category', 'notes'));
 	}
 
 }

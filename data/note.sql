@@ -5,7 +5,7 @@ CREATE TABLE "notes" (
 	`title`	TEXT NOT NULL,
 	`summary`	TEXT NOT NULL,
 	`content`	TEXT NOT NULL,
-	`create_at`	INTEGER,
+	`created_at`	INTEGER,
 	`updated_at`	INTEGER
 );
 CREATE TABLE "note_share" (

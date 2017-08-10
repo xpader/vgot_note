@@ -9,7 +9,6 @@ $this->title = 'VgotNOTE';
 $this->render('common/header');
 ?>
 <body class="hold-transition skin-blue sidebar-mini">
-<link rel="stylesheet" href="<?=STATIC_URL?>lib/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 <div class="wrapper">
 
 	<?php $this->render('common/top'); ?>
@@ -17,23 +16,31 @@ $this->render('common/header');
 
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper">
-		<!-- Content Header (Page header) -->
 		<section class="content-header">
 			<h1>
-				Text Editors
-				<small>Advanced form element</small>
+				<span id="noteListTitle">我的笔记</span>
+				<small>
+					<span id="noteListCount">*</span> 个笔记 &nbsp;&nbsp;
+					<i class="fa fa-refresh fa-spin" id="noteLoading" style="color:#555;"></i>
+				</small>
 			</h1>
 			<ol class="breadcrumb">
 				<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-				<li><a href="#">Forms</a></li>
-				<li class="active">Editors</li>
+				<li class="active">Mailbox</li>
 			</ol>
 		</section>
 
-		<!-- Main content -->
 		<section class="content">
 			<div class="row">
-				<div class="col-md-12">
+				<div class="col-md-3">
+					<div class="box box-solid">
+						<div class="box-body no-padding">
+							<ul class="nav nav-pills nav-stacked" id="noteList"></ul>
+						</div>
+						<!-- /.box-body -->
+					</div>
+				</div>
+				<div class="col-md-9" style="padding-left:0;">
 					<div class="box box-info">
 						<div class="box-header">
 							<h3 class="box-title">CK Editor
@@ -53,46 +60,18 @@ $this->render('common/header');
 						<!-- /.box-header -->
 						<div class="box-body pad">
 							<form>
-                    <textarea id="editor1" name="editor1" rows="10" cols="80">
-                                            This is my textarea to be replaced with CKEditor.
-                    </textarea>
+	                    <textarea id="editor1" name="editor1" rows="10" cols="80">
+	                                            This is my textarea to be replaced with CKEditor.
+	                    </textarea>
 							</form>
 						</div>
 					</div>
 					<!-- /.box -->
-
-					<div class="box">
-						<div class="box-header">
-							<h3 class="box-title">Bootstrap WYSIHTML5
-								<small>Simple and fast</small>
-							</h3>
-							<!-- tools box -->
-							<div class="pull-right box-tools">
-								<button type="button" class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip"
-								        title="Collapse">
-									<i class="fa fa-minus"></i></button>
-								<button type="button" class="btn btn-default btn-sm" data-widget="remove" data-toggle="tooltip"
-								        title="Remove">
-									<i class="fa fa-times"></i></button>
-							</div>
-							<!-- /. tools -->
-						</div>
-						<!-- /.box-header -->
-						<div class="box-body pad">
-							<form>
-                <textarea class="textarea" placeholder="Place some text here"
-                          style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-							</form>
-						</div>
-					</div>
 				</div>
-				<!-- /.col-->
 			</div>
-			<!-- ./row -->
 		</section>
-		<!-- /.content -->
 	</div>
-
+	<script src="<?=STATIC_URL?>js/workflow.js"></script>
 	<?php $this->render('common/bottom'); ?>
 </div>
 <!-- ./wrapper -->
@@ -103,15 +82,11 @@ $this->render('common/header');
 <script src="<?=STATIC_URL?>lib/alte/js/adminlte.min.js"></script>
 <!-- CK Editor -->
 <script src="<?=STATIC_URL?>lib/ckeditor/ckeditor.js"></script>
-<!-- Bootstrap WYSIHTML5 -->
-<script src="<?=STATIC_URL?>lib/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
 <script>
 $(function () {
 	// Replace the <textarea id="editor1"> with a CKEditor
 	// instance, using default configuration.
-	CKEDITOR.replace('editor1')
-	//bootstrap WYSIHTML5 - text editor
-	$('.textarea').wysihtml5()
+	CKEDITOR.replace('editor1');
 })
 </script>
 </body>

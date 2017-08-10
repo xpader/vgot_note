@@ -46,18 +46,43 @@ function getFolders() {
 	return categoryFolders.nextUntil(folderLoading, "li");
 }
 
+function toggleFocus(fd) {
+	fd.toggleClass("active").find("i").toggleClass("text-aqua");
+}
+
 function showCategoryFolders() {
 	folderLoading.show();
 
 	$.get("<?=Url::site('category/get-categories')?>").done(function(res) {
 		var html = '';
 		for (var i=0,row; row=res[i]; i++) {
-			html += '<li><a href="javascript:;"><i class="fa fa-folder-open"></i> ' + row.name + '</a></li>';
+			html += '<li><a href="javascript:;" data-cid="' + row.cate_id + '"><i class="fa fa-folder-open"></i> ' + row.name + '</a></li>';
 		}
 		getFolders().remove();
 		categoryFolders.after(html);
 		folderLoading.hide();
-		getFolders().eq(0).addClass("active").find("i").addClass("text-aqua");
+
+		var folders = getFolders();
+		folders.on("click", "a[data-cid]", function() {
+			var cid = $(this).data("cid");
+			var fd = $(this).parent("li");
+
+			if (fd.is(".active")) {
+				return;
+			}
+
+			toggleFocus(fd);
+			toggleFocus(folders.filter(".active").not(fd));
+
+			if (typeof showNoteList == "undefined") {
+				location.href = BASE_URL + "?cid=" + cid;
+			} else {
+				showNoteList(cid);
+			}
+		});
+
+
+		//folders.eq(0).find("a[data-cid]").trigger("click");
 	});
 }
 

@@ -18,4 +18,10 @@ class Category
 		return $db->from('category')->fetchAll();
 	}
 
+	public static function getCategory($uid, $cid)
+	{
+		$db = UserData::db($uid);
+		return $db->from('category')->where(['cate_id'=>$cid])->fetch();
+	}
+
 }
