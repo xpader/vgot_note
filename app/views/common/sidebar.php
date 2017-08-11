@@ -56,7 +56,7 @@ function showCategoryFolders() {
 	$.get("<?=Url::site('category/get-categories')?>").done(function(res) {
 		var html = '';
 		for (var i=0,row; row=res[i]; i++) {
-			html += '<li><a href="javascript:;" data-cid="' + row.cate_id + '"><i class="fa fa-folder-open"></i> ' + row.name + '</a></li>';
+			html += '<li><a href="javascript:;" data-cid="' + row.cate_id + '"><i class="fa fa-folder-open"></i> <span>' + row.name + '</span></a></li>';
 		}
 		getFolders().remove();
 		categoryFolders.after(html);

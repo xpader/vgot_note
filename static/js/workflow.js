@@ -19,7 +19,8 @@ function showNoteList(cateId) {
 		$("#noteListCount").html(count);
 
 		for (var i=0,row; row=res.notes[i]; i++) {
-			html += '<li><a href="javascript:;"><i class="fa fa-file-text-o"></i> ' + row.title + '</a></li>';
+			html += '<li><a href="javascript:;" data-id="' + row.note_id + '" title="创建时间：' + row.created_at + '&#13;修改时间：' + row.updated_at + '">'
+				+ '<i class="fa fa-file-text-o"></i> ' + row.title + '</a></li>';
 		}
 
 		$("#noteList").html(html).find(">li").eq(0).addClass("active");
@@ -28,3 +29,10 @@ function showNoteList(cateId) {
 }
 
 showNoteList();
+
+(function() {
+	$("#noteList").on("click", "a", function() {
+		var id = $(this).data("id");
+		console.log(id);
+	});
+})();

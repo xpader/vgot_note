@@ -14,8 +14,7 @@ return [
 	//The providers to register
 	'providers' => [
 		'security' => ['vgot\Core\Security', ['KF9cOBGhvVOekAK7n6Ei']],
-		'cache' => [
-			'vgot\Cache\FileCache', [
+		'cache' => ['vgot\Cache\FileCache', [
 				[
 					'stor_dir' => DATA_DIR.'/cache',
 					'cache_in_memory' => true
