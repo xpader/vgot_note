@@ -174,7 +174,7 @@ class User
 
 		list($id, $hash, $loginIp, $loginTime) = $data;
 
-		$user = $app->db->select('uid,username,regip,regtime,last_login_ip,last_login_time')
+		$user = $app->db->select('uid,username,hash,regip,regtime,last_login_ip,last_login_time')
 			->from('user')->where(['uid'=>$id, 'hash'=>$hash])->fetch();
 
 		return compact('id', 'loginIp', 'loginTime', 'user');

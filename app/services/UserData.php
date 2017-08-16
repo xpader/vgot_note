@@ -10,10 +10,27 @@ use vgot\Database\QueryBuilder;
 class UserData {
 
 	private static $dbConnections = [];
+	private static $userHashs = [];
 
 	public static function dir($uid)
 	{
-		return DATA_DIR.'/note/user/'.$uid;
+		if (!isset(self::$userHashs[$uid])) {
+			$app = getApp();
+
+			if ($uid == $app->user->id) {
+				$hash = $app->user->info['hash'];
+			} else {
+				$hash = $app->db->select('hash')->from('user')->where(['uid' => $uid])->fetchColumn();
+
+				if (!$hash) {
+					throw new \vgot\Exceptions\ApplicationException('用户不存在');
+				}
+			}
+
+			self::$userHashs[$uid] = $hash;
+		}
+
+		return DATA_DIR.'/note/user/'.$uid.'_'.self::$userHashs[$uid];
 	}
 
 	/**
