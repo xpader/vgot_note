@@ -2,7 +2,7 @@
  * Created by pader on 2017/8/11.
  */
 function showNoteList(cateId) {
-	var url = BASE_URL + "note/get-note-list";
+	var url = BASE_URL + "note/get-list";
 
 	if (cateId) {
 		url += '?cid=' + cateId;
@@ -28,11 +28,20 @@ function showNoteList(cateId) {
 	});
 }
 
-showNoteList();
+function loadNote(noteId) {
+	var url = BASE_URL + "note/get-note?note_id=" + noteId;
 
-(function() {
+	$.get(url).done(function(res) {
+		CKEDITOR.instances.editor1.setData(res.content);
+		$("#noteTitle").html(res.title + ' <small>' + res.updated_at + '</small>');
+	});
+}
+
+$(function() {
+	showNoteList();
+
 	$("#noteList").on("click", "a", function() {
 		var id = $(this).data("id");
-		console.log(id);
+		loadNote(id);
 	});
-})();
+});

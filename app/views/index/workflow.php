@@ -43,7 +43,8 @@ $this->render('common/header');
 				<div class="col-md-9" style="padding-left:0;">
 					<div class="box box-info">
 						<div class="box-header">
-							<h3 class="box-title">CK Editor
+							<h3 class="box-title" id="noteTitle">
+								CK Editor
 								<small>Advanced and full of features</small>
 							</h3>
 							<!-- tools box -->

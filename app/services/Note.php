@@ -27,6 +27,12 @@ class Note
 		return $db->from('notes')->fetchAll();
 	}
 
+	public static function getNote($uid, $noteId)
+	{
+		$db = UserData::db($uid);
+		return $db->from('notes')->where(['note_id'=>$noteId])->fetch();
+	}
+
 	public static function purifier($html)
 	{
 		static $purifier;

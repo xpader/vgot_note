@@ -36,7 +36,7 @@ class NoteController extends \app\components\Controller
 		echo $clean_html;
 	}
 
-	public function getNoteList()
+	public function getList()
 	{
 		$app = getApp();
 		$cid = $app->input->get('cid');
@@ -55,6 +55,15 @@ class NoteController extends \app\components\Controller
 		});
 
 		$app->output->json(compact('category', 'notes'));
+	}
+
+	public function getNote()
+	{
+		$app = getApp();
+		$noteId = $app->input->get('note_id');
+
+		$note = $noteId ? Note::getNote($app->user->id, $noteId) : null;
+		$app->output->json($note);
 	}
 
 }
