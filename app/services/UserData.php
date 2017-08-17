@@ -14,9 +14,9 @@ class UserData {
 
 	public static function dir($uid)
 	{
-		if (!isset(self::$userHashs[$uid])) {
-			$app = getApp();
+		$app = getApp();
 
+		if (!isset(self::$userHashs[$uid])) {
 			if ($uid == $app->user->id) {
 				$hash = $app->user->info['hash'];
 			} else {
@@ -30,7 +30,7 @@ class UserData {
 			self::$userHashs[$uid] = $hash;
 		}
 
-		return DATA_DIR.'/note/user/'.$uid.'_'.self::$userHashs[$uid];
+		return DATA_DIR.'/'.$app->config->get('note_dir').'/user/'.$uid.'_'.self::$userHashs[$uid];
 	}
 
 	/**
@@ -75,15 +75,7 @@ class UserData {
 
 			//create db
 			if ($createMode) {
-				$createSql = file_get_contents(DATA_DIR . '/note.sql');
-				$sqls = explode(';', $createSql);
-
-				foreach ($sqls as $sql) {
-					$sql = trim($sql);
-					if ($sql) {
-						$conn->exec($sql);
-					}
-				}
+				DbHelper::executeSqlFile($conn, DATA_DIR . '/note.sql');
 			}
 
 			self::$dbConnections[$uid] = $conn;

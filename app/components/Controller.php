@@ -17,6 +17,11 @@ class Controller extends \vgot\Core\Controller
 
 	public function init()
 	{
+		if (!is_file(DATA_DIR.'/install.lock')) {
+			header('Location:'.Url::site('install'));
+			exit;
+		}
+
 		$this->requireLogin && $this->checkLogin();
 	}
 

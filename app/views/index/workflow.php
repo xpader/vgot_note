@@ -5,7 +5,6 @@
  * Date: 2017/8/9
  * Time: 02:09
  */
-$this->title = 'VgotNOTE';
 $this->render('common/header');
 ?>
 <body class="hold-transition skin-blue sidebar-mini">

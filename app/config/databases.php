@@ -9,7 +9,7 @@
 return [
 	'default_connection' => 'main',
 	'main' => [
-		'filename' => DATA_DIR.'/note/main.db',
+		'filename' => DATA_DIR.'/'.getApp()->config->get('note_dir').'/main.db',
 		'driver' => 'sqlite3',
 		/**
 		 * Optional flags used to determine how to open the SQLite database
