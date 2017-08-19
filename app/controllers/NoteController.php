@@ -60,7 +60,7 @@ class NoteController extends \app\components\Controller
 	public function getNote()
 	{
 		$app = getApp();
-		$noteId = $app->input->get('note_id');
+		$noteId = $app->input->get('id');
 
 		$note = $noteId ? Note::getNote($app->user->id, $noteId) : null;
 		$app->output->json($note);

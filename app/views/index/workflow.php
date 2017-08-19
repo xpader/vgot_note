@@ -41,30 +41,20 @@ $this->render('common/header');
 				</div>
 				<div class="col-md-9" style="padding-left:0;">
 					<div class="box box-info">
-						<div class="box-header">
-							<h3 class="box-title" id="noteTitle">
-								CK Editor
-								<small>Advanced and full of features</small>
-							</h3>
-							<!-- tools box -->
-							<div class="pull-right box-tools">
-								<button type="button" class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip"
-								        title="Collapse">
-									<i class="fa fa-minus"></i></button>
-								<button type="button" class="btn btn-info btn-sm" data-widget="remove" data-toggle="tooltip"
-								        title="Remove">
-									<i class="fa fa-times"></i></button>
+						<form method="post" name="note">
+							<div class="box-header">
+								<h3 class="box-title" id="noteTitle">
+									CK Editor
+									<small>Advanced and full of features</small>
+								</h3>
 							</div>
-							<!-- /. tools -->
-						</div>
-						<!-- /.box-header -->
-						<div class="box-body pad">
-							<form>
-	                    <textarea id="editor1" name="editor1" rows="10" cols="80">
-	                                            This is my textarea to be replaced with CKEditor.
-	                    </textarea>
-							</form>
-						</div>
+							<!-- /.box-header -->
+							<div class="box-body pad">
+								<textarea id="editor1" name="content" rows="10" cols="80">This is my textarea to be replaced with CKEditor.</textarea>
+							</div>
+							<input type="hidden" name="id">
+							<input type="hidden" name="cate_id">
+						</form>
 					</div>
 					<!-- /.box -->
 				</div>
@@ -72,6 +62,28 @@ $this->render('common/header');
 		</section>
 	</div>
 	<script src="<?=STATIC_URL?>js/workflow.js"></script>
+	<script type="text/javascript">
+	var currentCateId = 1, currentNoteId = 0;
+
+	$(function() {
+		var noteList = $("#noteList");
+
+		showCategoryFolders();
+
+		noteList.on("click", "a", function() {
+			var id = $(this).data("id");
+			var nav = $(this).parent("li");
+
+			if (nav.is(".active")) {
+				return;
+			}
+
+			noteList.find(">.active").removeClass("active");
+			nav.addClass("active");
+			loadNote(id);
+		});
+	});
+	</script>
 	<?php $this->render('common/bottom'); ?>
 </div>
 <!-- ./wrapper -->

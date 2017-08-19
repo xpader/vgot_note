@@ -2,11 +2,6 @@
 use vgot\Web\Url;
 
 $app = getApp();
-
-$baseUrl = Url::site('');
-if (substr($baseUrl, -1) != '/') {
-	$baseUrl .= '/';
-}
 ?>
 <!DOCTYPE html>
 <html>
@@ -40,6 +35,6 @@ if (substr($baseUrl, -1) != '/') {
 <link rel="stylesheet" href="<?=STATIC_URL?>lib/pace/pace.css">
 <script src="<?=STATIC_URL?>lib/pace/pace.min.js"></script>
 <script type="text/javascript">
-var BASE_URL = "<?=$baseUrl?>";
+var BASE_URL = "<?=Url::base()?>";
 </script>
 </head>
