@@ -40,27 +40,13 @@ $this->render('common/header');
 					</div>
 				</div>
 				<div class="col-md-9" style="padding-left:0;">
-					<div class="box box-info">
-						<form method="post" name="note">
-							<div class="box-header">
-								<h3 class="box-title" id="noteTitle">
-									CK Editor
-									<small>Advanced and full of features</small>
-								</h3>
-							</div>
-							<!-- /.box-header -->
-							<div class="box-body pad">
-								<textarea id="editor1" name="content" rows="10" cols="80">This is my textarea to be replaced with CKEditor.</textarea>
-							</div>
-							<input type="hidden" name="id">
-							<input type="hidden" name="cate_id">
-						</form>
-					</div>
-					<!-- /.box -->
+					<div class="box box-info" id="noteBox"></div>
 				</div>
 			</div>
 		</section>
 	</div>
+	<!-- CK Editor -->
+	<script src="<?=STATIC_URL?>lib/ckeditor/ckeditor.js"></script>
 	<script src="<?=STATIC_URL?>js/workflow.js"></script>
 	<script type="text/javascript">
 	var currentCateId = 1, currentNoteId = 0;
@@ -92,14 +78,5 @@ $this->render('common/header');
 <script src="<?=STATIC_URL?>lib/bootstrap/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="<?=STATIC_URL?>lib/alte/js/adminlte.min.js"></script>
-<!-- CK Editor -->
-<script src="<?=STATIC_URL?>lib/ckeditor/ckeditor.js"></script>
-<script>
-$(function () {
-	// Replace the <textarea id="editor1"> with a CKEditor
-	// instance, using default configuration.
-	CKEDITOR.replace('editor1');
-})
-</script>
 </body>
 </html>

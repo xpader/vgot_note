@@ -33,6 +33,31 @@ class Note
 		return $db->from('notes')->where(['note_id'=>$noteId])->fetch();
 	}
 
+	/**
+	 * @param int $uid
+	 * @param array $data
+	 * @return int NoteId
+	 */
+	public static function setNote($uid, $data)
+	{
+		$db = UserData::db($uid);
+
+		if (empty($data['summary'])) {
+			$data['summary'] = mb_substr(strip_tags($data['content']), 0, 100, 'utf-8');
+		}
+
+		if (!empty($data['note_id'])) {
+			$noteId = $data['note_id'];
+			$db->where(['note_id'=>$noteId])->update('notes', $data);
+			return $noteId;
+		} else {
+			unset($data['note_id']);
+			$data['created_at'] = time();
+			$db->insert('notes', $data);
+			return $db->insertId();
+		}
+	}
+
 	public static function purifier($html)
 	{
 		static $purifier;

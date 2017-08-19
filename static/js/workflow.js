@@ -36,7 +36,8 @@ function showCategoryFolders() {
 			toggleFocus(fd);
 			toggleFocus(folders.filter(".active").not(fd));
 
-			showNoteList(cid);
+			currentCateId = cid;
+			showNoteList();
 		});
 
 		//folders.eq(0).find("a[data-cid]").trigger("click");
@@ -44,13 +45,8 @@ function showCategoryFolders() {
 	});
 }
 
-function showNoteList(cateId) {
-	var url = BASE_URL + "?app=note/get-list";
-
-	if (cateId) {
-		url += '&cid=' + cateId;
-	}
-
+function showNoteList() {
+	var url = BASE_URL + "?app=note/get-list&cid=" + currentCateId;
 	var noteLoading = $("#noteLoading").show();
 
 	$.get(url).done(function(res) {
@@ -62,7 +58,8 @@ function showNoteList(cateId) {
 		$("#noteListCount").html(count);
 
 		for (var i=0,row; row=res.notes[i]; i++) {
-			html += '<li><a href="javascript:;" data-id="' + row.note_id + '" title="创建时间：' + row.created_at + '&#13;修改时间：' + row.updated_at + '">'
+			html += '<li' + (row.note_id == currentNoteId ? ' class="active"' : '') + '><a href="javascript:;" data-id="'
+				+ row.note_id + '" title="创建时间：' + row.created_at + '&#13;修改时间：' + row.updated_at + '">'
 				+ '<i class="fa fa-file-text-o"></i> ' + row.title + '</a></li>';
 		}
 
@@ -71,29 +68,102 @@ function showNoteList(cateId) {
 	});
 }
 
-function loadNote(noteId) {
-	var url = BASE_URL + "?app=note/get-note&id=" + noteId;
+function saveNote(background, leave) {
+	var form = document.forms["note"];
 
-	$.get(url).done(setNote);
+	if (!form || form.changed.value == 0) {
+		return;
+	}
+
+	$.post(BASE_URL + "?app=note/save", $(form).serialize()).done(function(res) {
+		if (res) {
+			if (!background) {
+				form.id.value = res.id;
+				if (currentNoteId != res.id) {
+					currentNoteId = res.id;
+				}
+			}
+
+			if (!leave && form.cate_id.value == currentCateId) {
+				showNoteList();
+			}
+		}
+	});
 }
 
-function setNote(res) {
-	var form = document.forms["note"];
-	form.id.value = res.note_id;
-	form.cate_id.value = res.cate_id;
+function loadNote(noteId) {
+	if (noteId != 0 && noteId == currentNoteId) {
+		return;
+	}
 
-	CKEDITOR.instances.editor1.setData(res.content);
-	$("#noteTitle").html(res.title + ' <small>' + res.updated_at + '</small>');
+	saveNote(true);
+
+	$.get(BASE_URL + "?app=note/get-note&id=" + noteId).done(function(form) {
+		if (CKEDITOR.instances.editor1) {
+			CKEDITOR.instances.editor1.destroy();
+		}
+
+		$("#noteBox").html(form);
+		var editor = CKEDITOR.replace('editor1'),
+			form = document.forms["note"],
+			chg = null;
+
+		currentNoteId = form.id.value;
+
+		if (currentNoteId == 0) {
+			form.cate_id.value = currentCateId;
+			form.changed.value = 1;
+		}
+
+		$(form.title).change(function() {
+			saveNote();
+		});
+
+		editor.on('change', function(e) {
+			form.content.value = editor.getData();
+			form.changed.value = 1;
+		});
+
+		editor.on('blur', function(e) {
+			saveNote();
+		});
+	});
 }
 
 $(function() {
-	$("#newNote").click(function() {
-		setNote({
-			note_id: 0,
-			cate_id: currentCateId,
-			title: "",
-			content: "",
-			updated_at: ""
-		});
+	$("#newCate").click(function() {
+		swal({
+			title: '新建分类',
+			input: 'text',
+			showCancelButton: true,
+			confirmButtonText: '创建',
+			cancelButtonText: '取消',
+			showLoaderOnConfirm: true,
+			preConfirm: function (name) {
+				return new Promise(function (resolve, reject) {
+					name = $.trim(name);
+					if (name == "") {
+						reject("请输入分类名称！");
+						return;
+					}
+					resolve();
+				});
+			},
+			allowOutsideClick: false
+		}).then(function(name) {
+			swal({
+				type: 'success',
+				title: 'Ajax request finished!',
+				html: 'Submitted email: ' + email
+			})
+		}, $.noop);
 	});
+
+	$("#newNote").click(function() {
+		loadNote(0);
+	});
+
+	window.onbeforeunload = function() {
+		saveNote(true, true);
+	};
 });

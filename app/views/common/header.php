@@ -34,6 +34,8 @@ $app = getApp();
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 <link rel="stylesheet" href="<?=STATIC_URL?>lib/pace/pace.css">
 <script src="<?=STATIC_URL?>lib/pace/pace.min.js"></script>
+<script src="<?=STATIC_URL?>lib/sweetalert2/sweetalert2.min.js"></script>
+<link rel="stylesheet" type="text/css" href="<?=STATIC_URL?>lib/sweetalert2/sweetalert2.min.css">
 <script type="text/javascript">
 var BASE_URL = "<?=Url::base()?>";
 </script>

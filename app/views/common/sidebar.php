@@ -18,7 +18,7 @@ use vgot\Web\Url;
 		<!-- /.search form -->
 		<div style="text-align:center;padding:5px 0 15px;">
 			<div class="btn-group">
-				<button type="button" class="btn btn-primary"><i class="fa fa-folder-o"></i> 新建分类</button>
+				<button type="button" class="btn btn-primary" id="newCate"><i class="fa fa-folder-o"></i> 新建分类</button>
 				<button type="button" class="btn btn-primary" id="newNote"><i class="fa fa-edit"></i> 新建笔记</button>
 			</div>
 		</div>

@@ -15,18 +15,6 @@ use app\services\UserData;
 class NoteController extends \app\components\Controller
 {
 
-	public function userdb()
-	{
-		$db = UserData::db(1);
-		print_r($db);
-	}
-
-	public function userNotes()
-	{
-		$notes = Note::getNotes(1);
-		print_r($notes);
-	}
-
 	public function html()
 	{
 		$dirty_html = 'sdsadfsfsdfsafs<script>alert(\'asdf\');</script>&lt;script&gt;<p></p>aaa';
@@ -61,9 +49,44 @@ class NoteController extends \app\components\Controller
 	{
 		$app = getApp();
 		$noteId = $app->input->get('id');
+		$type = $app->input->get('type', 'html');
 
 		$note = $noteId ? Note::getNote($app->user->id, $noteId) : null;
-		$app->output->json($note);
+
+		if ($note) {
+			$note['updated_at'] = date('Y-m-d H:i:s', $note['updated_at']);
+		}
+
+		if ($type == 'json') {
+			$app->output->json($note);
+		} else {
+			return $this->render('note/form', compact('note'));
+		}
+	}
+
+	public function save()
+	{
+		$app = getApp();
+		$id = $app->input->post('id', 0, FILTER_SANITIZE_NUMBER_INT);
+		$cateId = $app->input->post('cate_id', null, FILTER_SANITIZE_NUMBER_INT);
+		$title = $app->input->post('title', 'strip_tags');
+		$content = $app->input->post('content', '');
+
+		if (trim($title) == '' && trim($content) == '') {
+			$app->output->json(null);
+		}
+
+		$data = [
+			'note_id' => $id,
+			'cate_id' => $cateId ?: 1,
+			'title' => $title,
+			'content' => Note::purifier($content),
+			'updated_at' => time()
+		];
+
+		$id = Note::setNote($app->user->id, $data);
+
+		$app->output->json(['id'=>$id]);
 	}
 
 }
