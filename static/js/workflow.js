@@ -103,7 +103,7 @@ function loadNote(noteId) {
 			CKEDITOR.instances.editor1.destroy();
 		}
 
-		$("#noteBox").html(form);
+		$("#noteBox").show().html(form);
 		var editor = CKEDITOR.replace('editor1'),
 			form = document.forms["note"],
 			chg = null;

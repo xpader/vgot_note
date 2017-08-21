@@ -8,42 +8,40 @@
 $this->render('common/header');
 ?>
 <body class="hold-transition skin-blue sidebar-mini">
+<style type="text/css">
+.box-note, .box-info {border-top:none; border-radius:0;}
+.box-info {border-bottom:none; border-top:none; margin:0;}
+.note-list {padding-right:0; background-color:#F7F7F7;}
+.note-list, .box-note, .box-info,.editor-init {min-height:100%;}
+.editor-icon {font-size:120px; color:#AAA; position:absolute; left:50%; top:50%; margin-left:-60px; margin-top:-60px;}
+</style>
 <div class="wrapper">
-
 	<?php $this->render('common/top'); ?>
 	<?php $this->render('common/sidebar'); ?>
 
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper">
-		<section class="content-header">
-			<h1>
-				<span id="noteListTitle">我的笔记</span>
-				<small>
-					<span id="noteListCount">*</span> 个笔记 &nbsp;&nbsp;
-					<i class="fa fa-refresh fa-spin" id="noteLoading" style="color:#555;"></i>
-				</small>
-			</h1>
-			<ol class="breadcrumb">
-				<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-				<li class="active">Mailbox</li>
-			</ol>
-		</section>
-
-		<section class="content">
-			<div class="row">
-				<div class="col-md-3">
-					<div class="box box-solid">
-						<div class="box-body no-padding">
-							<ul class="nav nav-pills nav-stacked" id="noteList"></ul>
-						</div>
-						<!-- /.box-body -->
+		<div class="row" style="height:100%;">
+			<div class="col-md-3 note-list">
+				<div class="box box-note">
+					<div class="box-header with-border">
+						<h3 class="box-title">
+							<span id="noteListTitle">我的笔记</span>
+							<small><span id="noteListCount">*</span> 个笔记</small>
+							<i class="fa fa-refresh fa-spin" id="noteLoading" style="color:#555;"></i>
+						</h3>
 					</div>
-				</div>
-				<div class="col-md-9" style="padding-left:0;">
-					<div class="box box-info" id="noteBox"></div>
+					<div class="box-body no-padding">
+						<ul class="nav nav-pills nav-stacked" id="noteList"></ul>
+					</div>
+					<!-- /.box-body -->
 				</div>
 			</div>
-		</section>
+			<div class="col-md-9" style="padding-left:0;height:100%;">
+				<i class="fa fa-pencil-square editor-icon"></i>
+				<div class="box box-info" id="noteBox" style="display:none;"></div>
+			</div>
+		</div>
 	</div>
 	<!-- CK Editor -->
 	<script src="<?=STATIC_URL?>lib/ckeditor/ckeditor.js"></script>
@@ -70,7 +68,7 @@ $this->render('common/header');
 		});
 	});
 	</script>
-	<?php $this->render('common/bottom'); ?>
+	<?php //$this->render('common/bottom'); ?>
 </div>
 <!-- ./wrapper -->
 
@@ -78,5 +76,19 @@ $this->render('common/header');
 <script src="<?=STATIC_URL?>lib/bootstrap/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="<?=STATIC_URL?>lib/alte/js/adminlte.min.js"></script>
+<script>
+(function() {
+	var navBarHeight = $(".navbar-static-top").height();
+	var wrapper = $(".content-wrapper");
+
+	function whauto() {
+		var wh = $(window).height() - navBarHeight;
+		wrapper.height(wh+"px");
+	}
+
+	$(window).resize(whauto);
+	whauto();
+})();
+</script>
 </body>
 </html>
