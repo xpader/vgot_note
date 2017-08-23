@@ -10,29 +10,31 @@ CKEDITOR.editorConfig = function( config ) {
 
 	// The toolbar groups arrangement, optimized for two toolbar rows.
 	config.toolbarGroups = [
-		{ name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
-		{ name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },
-		{ name: 'links' },
-		{ name: 'insert' },
-		{ name: 'forms' },
-		{ name: 'tools' },
-		{ name: 'document',	   groups: [ 'mode', 'document', 'doctools' ] },
-		{ name: 'others' },
-		'/',
+		{ name: 'styles', groups: [ 'styles' ] },
 		{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
-		{ name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
-		{ name: 'styles' },
-		{ name: 'colors' },
-		{ name: 'about' }
+		{ name: 'colors', groups: [ 'colors' ] },
+		{ name: 'document', groups: [ 'document', 'mode', 'doctools' ] },
+		{ name: 'clipboard', groups: [ 'undo', 'clipboard' ] },
+		{ name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
+		{ name: 'forms', groups: [ 'forms' ] },
+		'/',
+		{ name: 'paragraph', groups: [ 'align', 'list', 'indent', 'blocks', 'bidi', 'paragraph' ] },
+		{ name: 'links', groups: [ 'links' ] },
+		{ name: 'insert', groups: [ 'insert' ] },
+		{ name: 'tools', groups: [ 'tools' ] },
+		{ name: 'others', groups: [ 'others' ] },
+		{ name: 'about', groups: [ 'about' ] }
 	];
 
 	// Remove some buttons provided by the standard plugins, which are
 	// not needed in the Standard(s) toolbar.
-	config.removeButtons = 'Underline,Subscript,Superscript';
+	config.removeButtons = 'Save,NewPage,Preview,Templates,PasteFromWord,Find,Replace,SelectAll,Scayt,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,Subscript,Superscript,CreateDiv,BidiLtr,BidiRtl,Language,Anchor,Flash,Smiley,PageBreak,Iframe,ShowBlocks,Source,JustifyBlock,Format,Cut,Copy,Paste,SpecialChar,Image';
 
 	// Set the most common block elements.
 	config.format_tags = 'p;h1;h2;h3;pre';
 
 	// Simplify the dialog windows.
 	config.removeDialogTabs = 'image:advanced;link:advanced';
+
+	config.removePlugins = 'elementspath';
 };

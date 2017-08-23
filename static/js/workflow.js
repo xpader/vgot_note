@@ -131,6 +131,7 @@ function loadNote(noteId) {
 }
 
 $(function() {
+
 	$("#newCate").click(function() {
 		swal({
 			title: '新建分类',
@@ -166,4 +167,5 @@ $(function() {
 	window.onbeforeunload = function() {
 		saveNote(true, true);
 	};
+
 });

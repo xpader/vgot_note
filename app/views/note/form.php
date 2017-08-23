@@ -9,12 +9,12 @@
  */
 ?>
 <form method="post" name="note">
-	<div class="box-header" id="noteHeader">
+	<div class="note-header" id="noteHeader">
 		<input class="form-control" type="text" name="title" value="<?=$note['title']?>" placeholder="标题">
 		<small title="最后修改时间"><?=$note['updated_at']?></small>
 	</div>
 	<!-- /.box-header -->
-	<div class="box-body pad">
+	<div class="note-body">
 		<textarea id="editor1" name="content" rows="10" cols="80"><?=htmlspecialchars($note['content'])?></textarea>
 	</div>
 	<input type="hidden" name="id" value="<?=($note['note_id'] ?: 0)?>">
