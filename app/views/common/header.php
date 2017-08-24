@@ -1,4 +1,7 @@
 <?php
+/**
+ * @var $this \vgot\Core\View
+ */
 use vgot\Web\Url;
 
 $app = getApp();

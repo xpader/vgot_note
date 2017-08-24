@@ -2,8 +2,7 @@
 
 namespace app\controllers;
 
-use app\components\User;
-use app\services\Category;
+use vgot\Web\Url;
 
 /**
  * Created by PhpStorm.
@@ -19,7 +18,7 @@ class IndexController extends \app\components\Controller
 		$app = getApp();
 		$action = $app->input->uri('action');
 
-		if (in_array($action, ['login', 'loginPost'])) {
+		if (in_array($action, ['login', 'loginPost', 'logout'])) {
 			$this->requireLogin = false;
 		}
 
@@ -65,6 +64,13 @@ class IndexController extends \app\components\Controller
 		$app->user->login($user);
 
 		ajaxSuccess();
+	}
+
+	public function logout()
+	{
+		$app = getApp();
+		$app->user->logout();
+		header('Location: '.Url::base());
 	}
 
 }

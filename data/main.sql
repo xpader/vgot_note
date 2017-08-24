@@ -1,22 +1,14 @@
---
--- 由SQLiteStudio v3.1.1 产生的文件 周三 7月 26 12:50:01 2017
---
--- 文本编码：UTF-8
---
-PRAGMA foreign_keys = off;
 BEGIN TRANSACTION;
-
--- 表：user
-DROP TABLE IF EXISTS user;
-CREATE TABLE [user] (
-  [uid] INTEGER NOT NULL, 
-  [username] TEXT NOT NULL, 
-  [password] TEXT NOT NULL, 
-  [hash] TEXT NOT NULL, 
-  [regip] TEXT NOT NULL, 
-  [regtime] INTEGER NOT NULL, 
-  [last_login_ip] TEXT NOT NULL, 
-  [last_login_time] INTEGER NOT NULL);
-
-COMMIT TRANSACTION;
-PRAGMA foreign_keys = on;
+CREATE TABLE IF NOT EXISTS `user` (
+	`uid`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	`username`	TEXT NOT NULL UNIQUE,
+	`mail`	TEXT NOT NULL UNIQUE,
+	`password`	TEXT NOT NULL,
+	`hash`	TEXT NOT NULL,
+	`regip`	TEXT NOT NULL,
+	`regtime`	INTEGER NOT NULL,
+	`last_login_ip`	TEXT,
+	`last_login_time`	INTEGER DEFAULT (0)
+);
+INSERT INTO `user` VALUES (1,'admin','admin@admin.com','$2y$10$STXeeH7yORXQ7tQVUwg3lOs4Us1j9xb8oscPvQViM0w/4pTSgn.ky','LTMjtqjNGp2xF','127.0.0.1',1501044902,'127.0.0.1',1501044902);
+COMMIT;

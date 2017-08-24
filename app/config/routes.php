@@ -32,6 +32,6 @@ return [
 	'case_symbol' => '-',
 	'ucfirst' => false,
 	'route_maps' => [
-		'login' => 'index/login'
+		'(login|logout)' => 'index/$1',
 	]
 ];

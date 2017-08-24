@@ -9,17 +9,7 @@ $this->render('common/header');
 ?>
 <body class="hold-transition skin-blue sidebar-mini">
 <style type="text/css">
-.box-note, .box-info {border-top:none; border-radius:0;}
-.box-info {border-bottom:none; border-top:none; margin:0;}
-.note-list {padding-right:0; background-color:#F7F7F7; border-right:1px solid #eaeaea;}
-.note-list, .box-note, .box-info,.editor-init {min-height:100%;}
-.editor-icon {font-size:120px; color:#AAA; position:absolute; left:50%; top:50%; margin-left:-60px; margin-top:-60px;}
-.box-note {border:none; min-height:100%; margin:0;}
-.note-header {position:relative;}
-.note-header small {position:absolute; right:10px; top:8px; color:#b3b3b3;}
-.note-header .form-control {border:none;}
-.note-body {}
-.cke_reset {border-left:none; border-right:none; border-bottom:none;}
+.main-sidebar {padding-top:0; top:50px; bottom:0; min-height:0; overflow-y:auto;}
 </style>
 <div class="wrapper">
 	<?php $this->render('common/top'); ?>
@@ -34,7 +24,7 @@ $this->render('common/header');
 						<h3 class="box-title">
 							<span id="noteListTitle">我的笔记</span>
 							<small><span id="noteListCount">*</span> 个笔记</small>
-							<i class="fa fa-refresh fa-spin" id="noteLoading" style="color:#555;"></i>
+							<i class="fa fa-refresh fa-spin" id="noteLoading" style="color:#555;display:none;"></i>
 						</h3>
 					</div>
 					<div class="box-body no-padding">

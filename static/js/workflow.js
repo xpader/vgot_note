@@ -48,7 +48,7 @@ function showCategoryFolders() {
 
 function showNoteList() {
 	var url = BASE_URL + "?app=note/get-list&cid=" + currentCateId;
-	var noteLoading = $("#noteLoading").show();
+	// var noteLoading = $("#noteLoading").show();
 
 	$.get(url).done(function(res) {
 		var html = '';
@@ -65,7 +65,7 @@ function showNoteList() {
 		}
 
 		$("#noteList").html(html); //.find(">li").eq(0).addClass("active");
-		noteLoading.hide();
+		// noteLoading.hide();
 	});
 }
 
@@ -87,7 +87,7 @@ function saveNote(background, leave) {
 			}
 
 			if (!leave && form.cate_id.value == currentCateId) {
-				showNoteList();
+				setTimeout(showNoteList, 1000);
 			}
 		}
 	});
@@ -192,6 +192,9 @@ $(function() {
 	function adjustContainerHeight() {
 		var wh = $(window).height() - navBarHeight;
 		wrapper.height(wh+"px");
+
+		var listBox = $("#noteList").parent();
+		listBox.height(wh - listBox.prev(".box-header").outerHeight());
 
 		adjustEditor();
 	}

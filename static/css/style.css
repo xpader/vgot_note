@@ -1,0 +1,18 @@
+.box-note, .box-info {border-top:none; border-radius:0;}
+.box-info {border-bottom:none; border-top:none; margin:0;}
+.note-list {padding-right:0; background-color:#F7F7F7; border-right:1px solid #eaeaea;}
+.note-list, .box-note, .box-info,.editor-init {min-height:100%;}
+.note-list .box-title small {margin-left:20px;}
+.note-list .box-title i {margin-left:20px;}
+.note-list .box-body {overflow-y:auto;}
+.editor-icon {font-size:120px; color:#AAA; position:absolute; left:50%; top:50%; margin-left:-60px; margin-top:-60px;}
+.box-note {border:none; min-height:100%; margin:0;}
+.note-header {position:relative;}
+.note-header .form-control {border:none; font-size:16px; height:45px;}
+.note-header small {position:absolute; right:12px; top:14px; color:#b3b3b3;}
+.note-body {}
+
+/* CKEditor */
+.cke_reset {border-left:none; border-right:none; border-bottom:none;}
+.cke_combo__font .cke_combo_text {width:50px;}
+.cke_combo__fontsize .cke_combo_text {width:20px;}

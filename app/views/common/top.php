@@ -1,3 +1,9 @@
+<?php
+use vgot\Web\Url;
+
+$user = getApp()->user->info;
+?>
+<link rel="stylesheet" href="<?=STATIC_URL?>css/style.css">
 <header class="main-header">
 	<!-- Logo -->
 	<a href="../../index2.html" class="logo">
@@ -218,17 +224,16 @@
 				<!-- User Account: style can be found in dropdown.less -->
 				<li class="dropdown user user-menu">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						<img src="<?=STATIC_URL?>lib/alte/img/user2-160x160.jpg" class="user-image" alt="User Image">
-						<span class="hidden-xs">Alexander Pierce</span>
+						<img src="<?=get_gravatar($user['mail'], 25)?>" class="user-image" alt="User Image">
+						<span class="hidden-xs"><?=$user['username']?></span>
 					</a>
 					<ul class="dropdown-menu">
 						<!-- User image -->
 						<li class="user-header">
-							<img src="<?=STATIC_URL?>lib/alte/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
+							<img src="<?=get_gravatar($user['mail'])?>" class="img-circle" alt="头像" style="cursor:pointer;" onclick="window.open('https://www.gravatar.com/emails/')">
 							<p>
-								Alexander Pierce - Web Developer
-								<small>Member since Nov. 2012</small>
+								<?=$user['mail']?>
+								<small>注册于 <?=date('Y年n月j日', $user['regtime'])?></small>
 							</p>
 						</li>
 						<!-- Menu Body -->
@@ -252,7 +257,7 @@
 								<a href="#" class="btn btn-default btn-flat">设置</a>
 							</div>
 							<div class="pull-right">
-								<a href="#" class="btn btn-default btn-flat">退出登录</a>
+								<a href="<?=Url::site('logout')?>" class="btn btn-default btn-flat">退出登录</a>
 							</div>
 						</li>
 					</ul>

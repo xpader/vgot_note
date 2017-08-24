@@ -32,5 +32,6 @@ CKEDITOR.editorConfig = function( config ) {
 	// Simplify the dialog windows.
 	//config.removeDialogTabs = 'image:advanced;link:advanced';
 
-	//config.removePlugins = 'elementspath';
+	config.fontSize_defaultLabel = 14;
+	config.font_names = '微软雅黑/Microsoft YaHei; 宋体/Simsun; 黑体/SimHei; 楷体/KaiTi; Arial; Arial Black; Consolas; Times New Roman; Verdana';
 };
