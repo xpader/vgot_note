@@ -14,12 +14,12 @@ $this->render('common/header');
 .note-list {padding-right:0; background-color:#F7F7F7; border-right:1px solid #eaeaea;}
 .note-list, .box-note, .box-info,.editor-init {min-height:100%;}
 .editor-icon {font-size:120px; color:#AAA; position:absolute; left:50%; top:50%; margin-left:-60px; margin-top:-60px;}
-.box-note {border:none; min-height:100%;}
+.box-note {border:none; min-height:100%; margin:0;}
 .note-header {position:relative;}
 .note-header small {position:absolute; right:10px; top:8px; color:#b3b3b3;}
 .note-header .form-control {border:none;}
 .note-body {}
-.cke_reset {border-left:none; border-right:none;}
+.cke_reset {border-left:none; border-right:none; border-bottom:none;}
 </style>
 <div class="wrapper">
 	<?php $this->render('common/top'); ?>
@@ -28,7 +28,7 @@ $this->render('common/header');
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper">
 		<div class="row" style="height:100%;">
-			<div class="col-md-3 note-list">
+			<div class="col-xs-3 hidden-xs note-list">
 				<div class="box box-note">
 					<div class="box-header with-border">
 						<h3 class="box-title">
@@ -43,7 +43,7 @@ $this->render('common/header');
 					<!-- /.box-body -->
 				</div>
 			</div>
-			<div class="col-md-9" style="padding-left:0;height:100%;">
+			<div class="col-xs-9" style="padding-left:0;height:100%;">
 				<i class="fa fa-pencil-square editor-icon"></i>
 				<div class="box box-note" id="noteBox" style="display:none;"></div>
 			</div>
@@ -82,19 +82,5 @@ $this->render('common/header');
 <script src="<?=STATIC_URL?>lib/bootstrap/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="<?=STATIC_URL?>lib/alte/js/adminlte.min.js"></script>
-<script>
-(function() {
-	var navBarHeight = $(".navbar-static-top").height();
-	var wrapper = $(".content-wrapper");
-
-	function adjustContainerHeight() {
-		var wh = $(window).height() - navBarHeight;
-		wrapper.height(wh+"px");
-	}
-
-	$(window).resize(adjustContainerHeight);
-	adjustContainerHeight();
-})();
-</script>
 </body>
 </html>

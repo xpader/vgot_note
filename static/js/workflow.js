@@ -3,6 +3,7 @@
  */
 var folderLoading = $("#folderLoading");
 var categoryFolders = $("#categoryFolders");
+var Editor;
 
 function getFolders() {
 	return categoryFolders.nextUntil(folderLoading, "li");
@@ -79,6 +80,7 @@ function saveNote(background, leave) {
 		if (res) {
 			if (!background) {
 				form.id.value = res.id;
+				form.changed.value = 0;
 				if (currentNoteId != res.id) {
 					currentNoteId = res.id;
 				}
@@ -104,30 +106,45 @@ function loadNote(noteId) {
 		}
 
 		$("#noteBox").show().html(form);
-		var editor = CKEDITOR.replace('editor1'),
-			form = document.forms["note"],
-			chg = null;
+		var form = document.forms["note"];
+
+		if (noteId == 0) {
+			form.title.focus();
+		}
+
+		//初始化编辑器
+		Editor = CKEDITOR.replace('editor1');
+		Editor.on('loaded', adjustEditor);
 
 		currentNoteId = form.id.value;
 
 		if (currentNoteId == 0) {
 			form.cate_id.value = currentCateId;
-			form.changed.value = 1;
 		}
 
-		$(form.title).change(function() {
+		$(form.title).on('change', function() {
+			form.changed.value = 1;
+		}).on('blur', function() {
 			saveNote();
 		});
 
-		editor.on('change', function(e) {
-			form.content.value = editor.getData();
+		Editor.on('change', function(e) {
+			form.content.value = e.editor.getData();
 			form.changed.value = 1;
 		});
 
-		editor.on('blur', function(e) {
+		Editor.on('blur', function(e) {
 			saveNote();
 		});
 	});
+}
+
+function adjustEditor() {
+	var h = $(window).height() - $(".navbar-static-top").height() - $("#noteHeader").height();
+
+	if (Editor) {
+		Editor.resize('100%', h);
+	}
 }
 
 $(function() {
@@ -167,5 +184,19 @@ $(function() {
 	window.onbeforeunload = function() {
 		saveNote(true, true);
 	};
+
+	//Adjust Height
+	var navBarHeight = $(".navbar-static-top").height();
+	var wrapper = $(".content-wrapper");
+
+	function adjustContainerHeight() {
+		var wh = $(window).height() - navBarHeight;
+		wrapper.height(wh+"px");
+
+		adjustEditor();
+	}
+
+	$(window).resize(adjustContainerHeight);
+	adjustContainerHeight();
 
 });
