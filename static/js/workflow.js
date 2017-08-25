@@ -164,16 +164,20 @@ $(function() {
 						reject("请输入分类名称！");
 						return;
 					}
-					resolve();
+
+					$.post(BASE_URL + "?app=category/create-category", {name:name}, function(res) {
+						if (res.status) {
+							resolve(res.data);
+						} else {
+							reject(res.msg);
+						}
+					});
 				});
 			},
 			allowOutsideClick: false
-		}).then(function(name) {
-			swal({
-				type: 'success',
-				title: 'Ajax request finished!',
-				html: 'Submitted email: ' + email
-			})
+		}).then(function(data) {
+			currentCateId = data.cate_id;
+			showCategoryFolders();
 		}, $.noop);
 	});
 

@@ -20,4 +20,17 @@ class CategoryController extends \app\components\Controller
 		$app->output->json($categories);
 	}
 
+	public function createCategory()
+	{
+		$name = $this->input->post('name');
+
+		if (!$name) {
+			ajaxError('请输入分类名称');
+		}
+
+		$category = Category::addCategory($this->user->id, $name);
+
+		ajaxSuccess(null, $category);
+	}
+
 }

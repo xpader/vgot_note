@@ -24,4 +24,14 @@ class Category
 		return $db->from('category')->where(['cate_id'=>$cid])->fetch();
 	}
 
+	public static function addCategory($uid, $name)
+	{
+		$db = UserData::db($uid);
+
+		$db->insert('category', ['name'=>$name, 'parent_id'=>0]);
+		$id = $db->insertId();
+
+		return $db->from('category')->where(['cate_id'=>$id])->fetch();
+	}
+
 }
