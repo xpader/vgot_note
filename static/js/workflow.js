@@ -13,14 +13,24 @@ function toggleFocus(fd) {
 	fd.toggleClass("active").find("i").toggleClass("text-aqua");
 }
 
-function showCategoryFolders() {
+function showCategoryFolders(trigger) {
 	folderLoading.show();
 
 	$.get(BASE_URL + "?app=category/get-categories").done(function(res) {
 		var html = '';
+		var dropdown = '<div class="note-list-action dropdown">'
+			+ '<a href="javascript:;" title="更多操作" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="dropdown-toggle">'
+			+ '<i class="glyphicon glyphicon-option-vertical"></i>'
+			+ '</a> <ul class="dropdown-menu dropdown-menu-right">'
+			+ '<li><a href="javascript:;" data-action="rename"><i class="glyphicon glyphicon-edit"></i>重命名</a></li>'
+			+ '<li><a href="javascript:;" data-action="delete"><i class="glyphicon glyphicon-trash"></i>删除</a></li>'
+			+ '</ul></div>';
+
 		for (var i=0,row; row=res[i]; i++) {
-			html += '<li><a href="javascript:;" data-cid="' + row.cate_id + '"><i class="fa fa-folder-open"></i> <span>' + row.name + '</span></a></li>';
+			html += '<li><a href="javascript:;" data-cid="' + row.cate_id + '"><i class="fa fa-folder-open"></i> <span>'
+				+ row.name + '</span></a>' + (row.cate_id != 1 ? dropdown : '') + '</li>';
 		}
+
 		getFolders().remove();
 		categoryFolders.after(html);
 		folderLoading.hide();
@@ -41,8 +51,51 @@ function showCategoryFolders() {
 			showNoteList();
 		});
 
-		//folders.eq(0).find("a[data-cid]").trigger("click");
-		folders.find("a[data-cid=" + currentCateId + "]").trigger("click");
+		folders.on("click", ".dropdown-menu a[data-action]", function() {
+			var action = $(this).data("action");
+			var a = $(this).closest(".note-list-action").prev("a");
+			var cid = a.data("cid");
+			var origName = a.find("span").text();
+
+			switch (action) {
+				case "rename":
+					swal({
+						title: '重命名分类',
+						input: 'text',
+						text: '为 “' + origName + '” 指定一个新的名称',
+						showCancelButton: true,
+						confirmButtonText: '确定',
+						cancelButtonText: '取消',
+						showLoaderOnConfirm: true,
+						preConfirm: function (name) {
+							return new Promise(function (resolve, reject) {
+								name = $.trim(name);
+								if (name == "") {
+									reject("请输入分类名称！");
+									return;
+								}
+
+								$.post(BASE_URL + "?app=category/rename", {cid:cid, name:name}, function(res) {
+									if (res.status) {
+										resolve();
+									} else {
+										reject(res.msg);
+									}
+								});
+							});
+						},
+						allowOutsideClick: false
+					}).then(function() {
+						showCategoryFolders(false);
+					}, swal.noop);
+					break;
+			}
+		});
+
+		if (trigger == undefined || trigger) {
+			//folders.eq(0).find("a[data-cid]").trigger("click");
+			folders.find("a[data-cid=" + currentCateId + "]").trigger("click");
+		}
 	});
 }
 
@@ -58,15 +111,21 @@ function showNoteList() {
 		$("#noteListTitle").html(cateName);
 		$("#noteListCount").html(count);
 
-		var dropdown = '<div class="note-list-action">'
+		var dropdown = '<div class="note-list-action dropdown">'
 			+ '<a href="javascript:;" title="更多操作" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="dropdown-toggle">'
 			+ '<i class="glyphicon glyphicon-option-vertical"></i>'
-			+ '</a> <ul class="dropdown-menu"><li><a href="javascript:;"><i class="glyphicon glyphicon-scissors"></i>剪切</a></li></ul></div>';
+			+ '</a> <ul class="dropdown-menu dropdown-menu-right">'
+			+ '<li><a href="javascript:;"><i class="glyphicon glyphicon-transfer"></i>移动</a></li>'
+			+ '<li><a href="javascript:;"><i class="glyphicon glyphicon-trash"></i>删除</a></li>'
+			+ '<li><a href="javascript:;"><i class="glyphicon glyphicon-time"></i>历史记录</a></li>'
+			+ '<li role="separator" class="divider"></li>'
+			+ '<li class="dropdown-header">{updated_at}</li>'
+			+ '</ul></div>';
 
 		for (var i=0,row; row=res.notes[i]; i++) {
-			html += '<li' + (row.note_id == currentNoteId ? ' class="active"' : '') + '><a href="javascript:;" data-id="'
-				+ row.note_id + '" title="创建时间：' + row.created_at + '&#13;修改时间：' + row.updated_at + '">'
-				+ '<i class="fa fa-file-text-o"></i> ' + row.title + '</a>' + dropdown + '</li>';
+			html += '<li' + (row.note_id == currentNoteId ? ' class="active"' : '') + ' data-id="' + row.note_id + '">'
+				+ '<a href="javascript:;" title="创建时间：' + row.created_at + '&#13;修改时间：' + row.updated_at + '">'
+				+ '<i class="fa fa-file-text-o"></i> ' + row.title + '</a>' + dropdown.replace('{updated_at}', row.updated_at) + '</li>';
 		}
 
 		$("#noteList").html(html); //.find(">li").eq(0).addClass("active");
@@ -171,7 +230,7 @@ $(function() {
 						return;
 					}
 
-					$.post(BASE_URL + "?app=category/create-category", {name:name}, function(res) {
+					$.post(BASE_URL + "?app=category/create", {name:name}, function(res) {
 						if (res.status) {
 							resolve(res.data);
 						} else {
@@ -197,8 +256,8 @@ $(function() {
 	showCategoryFolders();
 
 	noteList.on("click", "a", function() {
-		var id = $(this).data("id");
 		var nav = $(this).parent("li");
+		var id = nav.data("id");
 
 		if (!id) {
 			return;

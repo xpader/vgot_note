@@ -34,4 +34,10 @@ class Category
 		return $db->from('category')->where(['cate_id'=>$id])->fetch();
 	}
 
+	public static function update($uid, $cid, $data)
+	{
+		$db = UserData::db($uid);
+		$db->where(['cate_id'=>$cid])->update('category', $data);
+	}
+
 }

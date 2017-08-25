@@ -5,9 +5,15 @@
 .note-list .box-title small {margin-left:20px;}
 .note-list .box-title i {margin-left:20px;}
 .note-list .box-body {overflow-y:auto;}
+
 .note-list-action {display:inline-block; position:absolute; right:5px; top:10px;}
 .note-list-action .dropdown-toggle {display:inline-block; width:25px; height:25px; line-height:25px; text-align:center;}
-.note-list-action .dropdown-menu {background-color:#FFF; left:auto; right:0;}
+.note-list-action .dropdown-menu {background-color:#FFF;}
+.note-list-action .dropdown-menu a {color:#000;}
+.note-list .nav li .dropdown, .sidebar-menu li .dropdown {display:none;}
+.note-list .nav li .dropdown.open, .sidebar-menu li .dropdown.open {display:inline-block;}
+.note-list .nav li:hover .dropdown, .sidebar-menu li:hover .dropdown {display:inline-block;}
+
 .editor-icon {font-size:120px; color:#AAA; position:absolute; left:50%; top:50%; margin-left:-60px; margin-top:-60px;}
 .box-note {border:none; min-height:100%; margin:0;}
 .note-header {position:relative;}
