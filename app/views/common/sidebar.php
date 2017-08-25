@@ -24,16 +24,16 @@ use vgot\Web\Url;
 		</div>
 		<!-- sidebar menu: : style can be found in sidebar.less -->
 		<ul class="sidebar-menu" data-widget="tree">
-			<li class="header" id="categoryFolders">目录</li>
+			<li class="header" id="categoryFolders">笔记目录</li>
 
 			<div id="folderLoading" style="padding:10px 0;text-align:center;">
 				<i class="fa fa-refresh fa-spin" style="color:#FFF;"></i>
 			</div>
 
-			<li class="header">LABELS</li>
+			<li class="header">其它</li>
 			<li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
 			<li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
-			<li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
+			<li><a href="<?=Url::site('recylebin')?>" target="_blank"><i class="glyphicon glyphicon-trash"></i> <span>回收站</span></a></li>
 		</ul>
 	</section>
 	<!-- /.sidebar -->

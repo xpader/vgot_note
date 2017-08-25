@@ -71,7 +71,12 @@ class Note
 				'colgroup' => [],
 				'th' => [],
 				'td' => [],
-				'iframe' => ['src'],
+				'iframe' => ['src'], //remove iframe with empty src attribute
+			]);
+
+			//Allow image base64 data URI
+			$config->set('URI.AllowedSchemes', [
+				'data' => true
 			]);
 
 			$purifier = new \HTMLPurifier($config);
