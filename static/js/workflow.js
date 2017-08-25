@@ -89,6 +89,24 @@ function showCategoryFolders(trigger) {
 						showCategoryFolders(false);
 					}, swal.noop);
 					break;
+
+				case "delete":
+					swal({
+						title: '确定要删除?',
+						text: "删除分类后，该分类下的笔记将全部移到回收站!",
+						type: 'warning',
+						showCancelButton: true,
+						confirmButtonColor: '#d33',
+						confirmButtonText: '删除 “' +　origName +'”',
+						cancelButtonText: '取消'
+					}).then(function () {
+						swal(
+							'Deleted!',
+							'Your file has been deleted.',
+							'success'
+						)
+					}, $.noop);
+					break;
 			}
 		});
 
@@ -255,7 +273,7 @@ $(function() {
 
 	showCategoryFolders();
 
-	noteList.on("click", "a", function() {
+	noteList.on("click", "li[data-id]>a", function() {
 		var nav = $(this).parent("li");
 		var id = nav.data("id");
 
