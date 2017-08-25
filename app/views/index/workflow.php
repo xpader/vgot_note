@@ -44,25 +44,6 @@ $this->render('common/header');
 	<script src="<?=STATIC_URL?>js/workflow.js"></script>
 	<script type="text/javascript">
 	var currentCateId = 1, currentNoteId = 0;
-
-	$(function() {
-		var noteList = $("#noteList");
-
-		showCategoryFolders();
-
-		noteList.on("click", "a", function() {
-			var id = $(this).data("id");
-			var nav = $(this).parent("li");
-
-			if (nav.is(".active")) {
-				return;
-			}
-
-			noteList.find(">.active").removeClass("active");
-			nav.addClass("active");
-			loadNote(id);
-		});
-	});
 	</script>
 	<?php //$this->render('common/bottom'); ?>
 </div>

@@ -58,10 +58,15 @@ function showNoteList() {
 		$("#noteListTitle").html(cateName);
 		$("#noteListCount").html(count);
 
+		var dropdown = '<div class="note-list-action">'
+			+ '<a href="javascript:;" title="更多操作" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="dropdown-toggle">'
+			+ '<i class="glyphicon glyphicon-option-vertical"></i>'
+			+ '</a> <ul class="dropdown-menu"><li><a href="javascript:;"><i class="glyphicon glyphicon-scissors"></i>剪切</a></li></ul></div>';
+
 		for (var i=0,row; row=res.notes[i]; i++) {
 			html += '<li' + (row.note_id == currentNoteId ? ' class="active"' : '') + '><a href="javascript:;" data-id="'
 				+ row.note_id + '" title="创建时间：' + row.created_at + '&#13;修改时间：' + row.updated_at + '">'
-				+ '<i class="fa fa-file-text-o"></i> ' + row.title + '</a></li>';
+				+ '<i class="fa fa-file-text-o"></i> ' + row.title + '</a>' + dropdown + '</li>';
 		}
 
 		$("#noteList").html(html); //.find(">li").eq(0).addClass("active");
@@ -149,6 +154,7 @@ function adjustEditor() {
 
 $(function() {
 
+	//新建按钮
 	$("#newCate").click(function() {
 		swal({
 			title: '新建分类',
@@ -185,11 +191,34 @@ $(function() {
 		loadNote(0);
 	});
 
+	//列表功能
+	var noteList = $("#noteList");
+
+	showCategoryFolders();
+
+	noteList.on("click", "a", function() {
+		var id = $(this).data("id");
+		var nav = $(this).parent("li");
+
+		if (!id) {
+			return;
+		}
+
+		if (nav.is(".active")) {
+			return;
+		}
+
+		noteList.find(">.active").removeClass("active");
+		nav.addClass("active");
+		loadNote(id);
+	});
+
+	//保存事件
 	window.onbeforeunload = function() {
 		saveNote(true, true);
 	};
 
-	//Adjust Height
+	//自动调试调整
 	var navBarHeight = $(".navbar-static-top").height();
 	var wrapper = $(".content-wrapper");
 
