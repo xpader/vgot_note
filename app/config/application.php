@@ -9,7 +9,7 @@
 return [
 	'id' => 'Note',
 	'base_url' => 'http://127.0.0.1/dev/vgot_note/',
-	'entry_file' => 'index.php',
+	'entry_file' => '',
 
 	//The providers to register
 	'providers' => [

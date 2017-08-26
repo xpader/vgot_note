@@ -17,8 +17,11 @@ class Note
 		$db = UserData::db($uid);
 		$cateId && $db->where(['cate_id'=>$cateId]);
 
-		return $db->select('note_id,cate_id,title,summary,created_at,updated_at')
-			->from('notes')->orderBy(['updated_at'=>SORT_DESC])->fetchAll();
+		return $db->select('n.note_id,n.cate_id,n.title,n.summary,n.created_at,n.updated_at,'
+			.'s.note_id AS share,s.key AS share_key, s.expires AS share_expires')
+			->from('notes n')
+			->leftJoin('note_share s', 'note_id')
+			->orderBy(['n.updated_at'=>SORT_DESC])->fetchAll();
 	}
 
 	public static function getNotes($uid)
@@ -31,6 +34,20 @@ class Note
 	{
 		$db = UserData::db($uid);
 		return $db->from('notes')->where(['note_id'=>$noteId])->fetch();
+	}
+
+	/**
+	 * 检查指定笔记是否存在
+	 *
+	 * @param int $uid
+	 * @param int $noteId
+	 * @return bool
+	 */
+	public static function checkExists($uid, $noteId)
+	{
+		$db = UserData::db($uid);
+		$note = $db->from('notes')->select('note_id')->where(['note_id'=>$noteId])->fetch();
+		return (boolean)$note;
 	}
 
 	/**
@@ -78,6 +95,11 @@ class Note
 			$config->set('URI.AllowedSchemes', [
 				'data' => true
 			]);
+
+			$config->set('HTML.AllowedAttributes', [
+				'a.href' => true
+			]);
+			$config->set('HTML.TargetBlank', true);
 
 			$purifier = new \HTMLPurifier($config);
 		}

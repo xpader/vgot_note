@@ -10,18 +10,49 @@ namespace app\controllers;
 
 use app\services\Category;
 use app\services\Note;
-use app\services\UserData;
+use app\services\NoteShare;
+use app\services\User;
+use vgot\Exceptions\HttpNotFoundException;
+use vgot\Web\Url;
 
 class NoteController extends \app\components\Controller
 {
 
-	public function html()
+	protected $requireLoginExceptActions = ['viewShare'];
+
+	/**
+	 * 查看分享的笔记
+	 *
+	 * @return string
+	 * @throws
+	 */
+	public function viewShare()
 	{
-		$dirty_html = 'sdsadfsfsdfsafs<script>alert(\'asdf\');</script>&lt;script&gt;<p></p>aaa';
+		$app = getApp();
+		$uid = $app->input->get('uid');
+		$key = $app->input->get('id');
 
-		$clean_html = Note::purifier($dirty_html);
+		if (!$uid || !$key) {
+			throw new \ErrorException('参数错误');
+		}
 
-		echo $clean_html;
+		$share = NoteShare::get($uid, $key);
+
+		if (!$share) {
+			throw new HttpNotFoundException('该笔记不存在！');
+		}
+
+		$note = Note::getNote($uid, $share['note_id']);
+
+		if (!$note) {
+			throw new \ErrorException('数据异常，该笔记不存在');
+		}
+
+		$share['name'] = User::getName($uid);
+
+		NoteShare::updateViewCount($uid, $share['note_id']);
+
+		return $this->render('note/viewShare', compact('share', 'note'));
 	}
 
 	public function getList()
@@ -37,9 +68,23 @@ class NoteController extends \app\components\Controller
 			$category = null;
 		}
 
-		array_walk($notes, function(&$row) {
+		$now = time();
+
+		array_walk($notes, function(&$row) use ($now, $app) {
 			$row['created_at'] = date('Y-m-d H:i:s', $row['created_at']);
 			$row['updated_at'] = date('Y-m-d H:i:s', $row['updated_at']);
+
+			if ($row['share']) {
+				if ($row['share_expires']) {
+					$row['share'] = $row['share_expire'] > $now ? 2 : -1; //2 尚未过期，-1 已经过期
+					$row['share_expires'] = date('Y-m-d H:i:s', $row['share_expires']);
+				} else {
+					$row['share'] = 1;
+				}
+				$row['share_url'] = Url::site(['note/view-share', 'uid'=>$app->user->id, 'id'=>$row['share_key']]);
+			}
+
+			unset($row['share_key']);
 		});
 
 		$app->output->json(compact('category', 'notes'));
@@ -80,7 +125,8 @@ class NoteController extends \app\components\Controller
 			'note_id' => $id,
 			'cate_id' => $cateId ?: 1,
 			'title' => $title,
-			'content' => Note::purifier($content),
+			//'content' => Note::purifier($content),
+			'content' => $content,
 			'updated_at' => time()
 		];
 

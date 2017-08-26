@@ -13,7 +13,7 @@ use vgot\Web\Url;
 class IndexController extends \app\components\Controller
 {
 
-	public function init()
+	public function __init()
 	{
 		$app = getApp();
 		$action = $app->input->uri('action');
@@ -22,7 +22,7 @@ class IndexController extends \app\components\Controller
 			$this->requireLogin = false;
 		}
 
-		parent::init();
+		parent::__init();
 	}
 
 	public function index()
