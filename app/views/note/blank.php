@@ -26,6 +26,7 @@ function autoHeight() {
 
 window.onresize = autoHeight;
 </script>
+<base target="_blank" />
 </head>
 <body class="cke_editable cke_editable_themed cke_contents_ltr">
 <div id="blankContentWrapper">
