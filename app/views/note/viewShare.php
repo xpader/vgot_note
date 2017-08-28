@@ -13,22 +13,23 @@
 $this->title = $note['title'];
 $this->render('common/header');
 ?>
-<body class="hold-transition skin-blue sidebar-collapse">
+<body class="skin-blue sidebar-collapse">
 
-<div class="content-wrapper" style="min-height: 1126px;">
-	<!-- Content Header (Page header) -->
-	<section class="content-header">
-		<h1>
-			<?=$note['title']?>
-			<small><?=$share['name']?> shared at <?=date('Y/n/j', $share['share_time'])?></small>
-		</h1>
-	</section>
+<div class="content-wrapper">
+	<div class="container">
+		<section class="content-header">
+			<h1>
+				<?=$note['title']?>
+				<small><?=$share['name']?> shared at <?=date('Y/n/j', $share['share_time'])?></small>
+			</h1>
+		</section>
 
-	<section class="content">
-		<div class="box">
-			<div class="box-body"><?=$note['content']?></div>
-		</div>
-	</section>
+		<section class="content">
+			<div class="box">
+				<div class="box-body"><?=$note['content']?></div>
+			</div>
+		</section>
+	</div>
 </div>
 
 <script src="<?=STATIC_URL?>lib/bootstrap/js/bootstrap.min.js"></script>
