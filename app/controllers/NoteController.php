@@ -18,7 +18,7 @@ use vgot\Web\Url;
 class NoteController extends \app\components\Controller
 {
 
-	protected $requireLoginExceptActions = ['viewShare'];
+	protected $requireLoginExceptActions = ['viewShare', 'blank'];
 
 	/**
 	 * 查看分享的笔记
@@ -45,7 +45,7 @@ class NoteController extends \app\components\Controller
 		$note = Note::getNote($uid, $share['note_id']);
 
 		if (!$note) {
-			throw new \ErrorException('数据异常，该笔记不存在');
+			throw new HttpNotFoundException('数据异常，该笔记不存在');
 		}
 
 		$share['name'] = User::getName($uid);
@@ -55,6 +55,9 @@ class NoteController extends \app\components\Controller
 		return $this->render('note/viewShare', compact('share', 'note'));
 	}
 
+	/**
+	 * 获取笔记列表
+	 */
 	public function getList()
 	{
 		$app = getApp();
@@ -90,6 +93,9 @@ class NoteController extends \app\components\Controller
 		$app->output->json(compact('category', 'notes'));
 	}
 
+	/**
+	 * 获取单个笔记详情
+	 */
 	public function getNote()
 	{
 		$app = getApp();
@@ -105,10 +111,13 @@ class NoteController extends \app\components\Controller
 		if ($type == 'json') {
 			$app->output->json($note);
 		} else {
-			return $this->render('note/form', compact('note'));
+			$this->render('note/form', compact('note'));
 		}
 	}
 
+	/**
+	 * 保存/创建笔记
+	 */
 	public function save()
 	{
 		$app = getApp();
@@ -133,6 +142,19 @@ class NoteController extends \app\components\Controller
 		$id = Note::setNote($app->user->id, $data);
 
 		$app->output->json(['id'=>$id]);
+	}
+
+	/**
+	 * 笔记展示空白页
+	 */
+	public function blank()
+	{
+		$expires = 86400;
+
+		header('Cache-Control: public, max-age='.$expires);
+		header('Pragma: cache');
+		header('Expires: '.gmdate('D, d M Y H:i:s', time() + $expires).' GMT');
+		$this->render('note/blank');
 	}
 
 }

@@ -9,7 +9,7 @@ body {
 	font-size: 12px;
 
 	/* Text color */
-	color: #333;
+	color: #000;
 
 	/* Remove the background color to make it transparent */
 	background-color: #fff;
@@ -26,8 +26,10 @@ body {
 }
 
 p {
-	margin: 0;
+	margin: 0 0 5px;
 }
+
+p img {margin-bottom:5px;}
 
 blockquote {
 	padding: 10px 0;
@@ -68,6 +70,10 @@ h1,h2,h3,h4,h5,h6 {
 hr {
 	border: 0px;
 	border-top: 1px solid #ccc;
+}
+
+img {
+	vertical-align: bottom;
 }
 
 img.right {
