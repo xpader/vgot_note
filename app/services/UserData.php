@@ -103,6 +103,7 @@ class UserData {
 		return [
 			'filename' => $userDir.'/note.db',
 			'driver' => 'sqlite3',
+			'timeout' => 2,
 			'query_builder' => true,
 			'debug' => true
 		];

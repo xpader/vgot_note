@@ -25,6 +25,7 @@ return [
 		 * @var string|null
 		 */
 		'encryption_key' => null,
+		'timeout' => 2,
 		'query_builder' => true,
 		'debug' => true
 	]
