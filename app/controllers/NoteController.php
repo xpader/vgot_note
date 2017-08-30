@@ -56,6 +56,19 @@ class NoteController extends \app\components\Controller
 	}
 
 	/**
+	 * 笔记展示空白页
+	 */
+	public function blank()
+	{
+		$expires = 86400;
+
+		header('Cache-Control: public, max-age='.$expires);
+		header('Pragma: cache');
+		header('Expires: '.gmdate('D, d M Y H:i:s', time() + $expires).' GMT');
+		$this->render('note/blank');
+	}
+
+	/**
 	 * 获取笔记列表
 	 */
 	public function getList()
@@ -142,19 +155,6 @@ class NoteController extends \app\components\Controller
 		$id = Note::setNote($app->user->id, $data);
 
 		$app->output->json(['id'=>$id]);
-	}
-
-	/**
-	 * 笔记展示空白页
-	 */
-	public function blank()
-	{
-		$expires = 86400;
-
-		header('Cache-Control: public, max-age='.$expires);
-		header('Pragma: cache');
-		header('Expires: '.gmdate('D, d M Y H:i:s', time() + $expires).' GMT');
-		$this->render('note/blank');
 	}
 
 }

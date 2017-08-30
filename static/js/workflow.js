@@ -316,11 +316,40 @@ $(function() {
 	});
 
 	noteList.on("click", ".dropdown-menu a[data-action]", function() {
-		var nav = $(this).closest("li[data-id]");
-		var id = nav.data("id");
-		var action = $(this).data("action");
+		var nav = $(this).closest("li[data-id]"),
+			id = nav.data("id"),
+			action = $(this).data("action"),
+			title = $(this).attr("title");
 
 		switch (action) {
+			case "delete":
+				swal({
+					title: '删除笔记',
+					text: "共享该笔记后，他人将可通过链接查看笔记内容。",
+					type: 'warning',
+					showCancelButton: true,
+					confirmButtonText: '确定',
+					cancelButtonText: '取消'
+				}).then(function () {
+					return new Promise(function(resolve, reject) {
+						$.post(BASE_URL + "?app=share/share", {id:id}, function(res) {
+							if (res.status) {
+								resolve(res.data);
+							} else {
+								reject(res.msg);
+							}
+						});
+					});
+				}).then(function(data) {
+					swal(
+						'分享成功!',
+						'分享网址: <span>' + data.url + '</span>',
+						'success'
+					);
+
+					showNoteList();
+				}, $.noop);
+				break;
 			case 'share':
 				swal({
 					title: '分享笔记',
