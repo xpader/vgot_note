@@ -91,4 +91,10 @@ class NoteHistory
 		return $db->from(self::TABLE)->where(['note_id'=>$id])->orderBy(['id'=>SORT_DESC])->limit(1)->fetch();
 	}
 
+	public static function clearHistory($uid, $id)
+	{
+		$db = userDb($uid);
+		$db->where(['note_id'=>$id])->delete(self::TABLE);
+	}
+
 }

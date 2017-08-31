@@ -88,7 +88,7 @@ class Recylebin
 		$db = userDb($uid);
 		$db->where(['note_id'=>$id])->delete(self::TABLE);
 		NoteShare::cancel($uid, $id);
-		$db->where(['note_id'=>$id])->delete('note_history');
+		NoteHistory::clearHistory($uid, $id);
 	}
 
 }
