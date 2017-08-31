@@ -155,12 +155,14 @@ class NoteController extends \app\components\Controller
 			'updated_at' => time()
 		];
 
-		$id = Note::setNote($uid, $data);
+		$realId = Note::setNote($uid, $data);
 
-		//保存历史记录
-		NoteHistory::save($uid, $id, $data['updated_at']);
+		//非首次创建时，尝试保存历史记录
+		if ($realId == $id) {
+			NoteHistory::save($uid, $id, $data['updated_at']);
+		}
 
-		$app->output->json(['id'=>$id]);
+		$app->output->json(['id'=>$realId]);
 	}
 
 }
