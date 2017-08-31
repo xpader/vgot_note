@@ -62,6 +62,12 @@ class Recylebin
 
 		unset($note['deleted_at']);
 
+		//如果原分类不存在了，则恢复到默认分类中
+		$cate = Category::getCategory($uid, $note['cate_id']);
+		if (!$cate) {
+			$note['cate_id'] = 1;
+		}
+
 		if ($db->insert(Note::TABLE, $note)) {
 			$db->where(['note_id'=>$id])->delete(self::TABLE);
 			return true;
