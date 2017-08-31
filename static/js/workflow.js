@@ -134,7 +134,7 @@ function showNoteList() {
 			+ '<i class="glyphicon glyphicon-option-vertical"></i>'
 			+ '</a> <ul class="dropdown-menu dropdown-menu-right">'
 			+ '<li><a href="javascript:;"><i class="glyphicon glyphicon-transfer"></i>移动</a></li>'
-			+ '<li><a href="javascript:;"><i class="glyphicon glyphicon-trash"></i>删除</a></li>'
+			+ '<li><a href="javascript:;" data-action="remove"><i class="glyphicon glyphicon-trash"></i>删除</a></li>'
 			+ '<li role="separator" class="divider"></li>{li_share}<li role="separator" class="divider"></li>'
 			+ '<li><a href="javascript:;"><i class="fa fa-history"></i>历史记录</a></li>'
 			+ '<li role="separator" class="divider"></li>'
@@ -212,8 +212,9 @@ function loadNote(noteId) {
 	saveNote(true);
 
 	$.get(BASE_URL + "?app=note/get-note&id=" + noteId).done(function(form) {
-		if (CKEDITOR.instances.editor1) {
-			CKEDITOR.instances.editor1.destroy();
+		if (Editor) {
+			//CKEDITOR.instances.editor1
+			Editor.destroy();
 		}
 
 		$("#noteBox").show().html(form);
@@ -322,17 +323,17 @@ $(function() {
 			title = $(this).attr("title");
 
 		switch (action) {
-			case "delete":
+			case "remove":
 				swal({
 					title: '删除笔记',
-					text: "共享该笔记后，他人将可通过链接查看笔记内容。",
+					text: "将该笔记移动到回收站？",
 					type: 'warning',
 					showCancelButton: true,
 					confirmButtonText: '确定',
 					cancelButtonText: '取消'
 				}).then(function () {
 					return new Promise(function(resolve, reject) {
-						$.post(BASE_URL + "?app=share/share", {id:id}, function(res) {
+						$.post(BASE_URL + "?app=recylebin/remove", {id:id}, function(res) {
 							if (res.status) {
 								resolve(res.data);
 							} else {
@@ -341,13 +342,20 @@ $(function() {
 						});
 					});
 				}).then(function(data) {
-					swal(
-						'分享成功!',
-						'分享网址: <span>' + data.url + '</span>',
-						'success'
-					);
+					swal({
+						title: '删除成功',
+						type: 'success',
+						timer: 2000
+					}).catch($.noop);
 
 					showNoteList();
+
+					if (id == currentNoteId) {
+						if (Editor) {
+							Editor.destroy();
+						}
+						$("#noteBox").hide().html('');
+					}
 				}, $.noop);
 				break;
 			case 'share':
@@ -374,7 +382,6 @@ $(function() {
 						'分享网址: <span>' + data.url + '</span>',
 						'success'
 					);
-
 					showNoteList();
 				}, $.noop);
 				break;
@@ -399,10 +406,8 @@ $(function() {
 					swal({
 						title: '已取消分享',
 						type: 'success',
-						confirmButtonText: '好的',
 						timer: 1000
 					}).catch($.noop);
-
 					showNoteList();
 				}, $.noop);
 				break;

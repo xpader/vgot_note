@@ -60,7 +60,7 @@ class Note
 		$db = UserData::db($uid);
 
 		if (empty($data['summary'])) {
-			$data['summary'] = mb_substr(strip_tags($data['content']), 0, 100, 'utf-8');
+			$data['summary'] = mb_substr(trim(strip_tags($data['content'])), 0, 100, 'utf-8');
 		}
 
 		if (!empty($data['note_id'])) {
