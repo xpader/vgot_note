@@ -1,5 +1,6 @@
 <?php
 use vgot\Web\Url;
+$controller = getApp()->input->uri('controller');
 ?>
 <!-- Left side column. contains the logo and sidebar -->
 <aside class="main-sidebar">
@@ -33,7 +34,7 @@ use vgot\Web\Url;
 			<li class="header">其它</li>
 			<li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
 			<li><a href="#"><i class="fa  fa-share-alt text-yellow"></i> <span>我的分享</span></a></li>
-			<li><a href="<?=Url::site('recylebin')?>" target="_blank"><i class="glyphicon glyphicon-trash"></i> <span>回收站</span></a></li>
+			<li<?php if ($controller == '\app\controllers\RecylebinController') {?> class="active"<?php } ?>><a href="<?=Url::site('recylebin')?>"><i class="glyphicon glyphicon-trash"></i> <span>回收站</span></a></li>
 		</ul>
 	</section>
 	<!-- /.sidebar -->

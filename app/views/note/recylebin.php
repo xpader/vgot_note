@@ -2,12 +2,13 @@
 /**
  * Created by PhpStorm.
  * User: pader
- * Date: 2017/8/9
- * Time: 02:09
+ * Date: 2017/9/1
+ * Time: 02:25
  */
 $this->render('common/header');
 ?>
 <body class="hold-transition skin-blue sidebar-mini">
+
 <style type="text/css">
 .main-sidebar {padding-top:0; top:50px; bottom:0; min-height:0; overflow-y:auto;}
 </style>
@@ -22,7 +23,7 @@ $this->render('common/header');
 				<div class="box box-note">
 					<div class="box-header with-border">
 						<h3 class="box-title">
-							<span id="noteListTitle">我的笔记</span>
+							<span id="noteListTitle">回收站</span>
 							<small><span id="noteListCount">*</span> 个笔记</small>
 							<i class="fa fa-refresh fa-spin" id="noteLoading" style="color:#555;display:none;"></i>
 						</h3>
@@ -39,12 +40,6 @@ $this->render('common/header');
 			</div>
 		</div>
 	</div>
-	<!-- CK Editor -->
-	<script src="<?=STATIC_URL?>lib/ckeditor/ckeditor.js"></script>
-	<script src="<?=STATIC_URL?>js/workflow.js"></script>
-	<script type="text/javascript">
-	var currentCateId = 2, currentNoteId = 0;
-	</script>
 	<?php //$this->render('common/bottom'); ?>
 </div>
 <!-- ./wrapper -->

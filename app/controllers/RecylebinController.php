@@ -15,7 +15,9 @@ use app\services\Recylebin;
 class RecylebinController extends Controller {
 
 	public function index()
-	{}
+	{
+		$this->render('note/recylebin');
+	}
 
 	public function remove()
 	{
