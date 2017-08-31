@@ -190,7 +190,9 @@ function saveNote(background, leave) {
 	$.post(BASE_URL + "?app=note/save", $(form).serialize()).done(function(res) {
 		if (res) {
 			if (!background) {
-				form.id.value = res.id;
+				if (form.id.value == 0) { //一些容错的情况
+					form.id.value = res.id;
+				}
 				form.changed.value = 0;
 				if (currentNoteId != res.id) {
 					currentNoteId = res.id;

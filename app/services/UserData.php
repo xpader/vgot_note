@@ -43,14 +43,12 @@ class UserData {
 	/**
 	 * Get user DB connection
 	 *
-	 * @param int|null $uid 指定 null 则为当前登录用户
+	 * @param int $uid
 	 * @return QueryBuilder
 	 * @throws
 	 */
 	public static function db($uid=null)
 	{
-		$uid === null && $uid = getApp()->user->id;
-
 		if (!isset(self::$dbConnections[$uid])) {
 			$config = self::getDbConfig($uid);
 

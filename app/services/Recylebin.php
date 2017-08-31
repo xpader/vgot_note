@@ -15,6 +15,8 @@ namespace app\services;
 class Recylebin
 {
 
+	const TABLE = 'note_recylebin';
+
 	/**
 	 * 将指定笔记移进回收站
 	 *
@@ -34,11 +36,53 @@ class Recylebin
 		$select = $db->select("note_id,cate_id,title,summary,content,created_at,updated_at,$now AS deleted_time")
 			->from('notes')->where(['note_id'=>$id])->limit(1)->buildSelect();
 
-		if ($db->exec('REPLACE INTO '.$db->tableName('note_recylebin').' '.$select)) {
+		if ($db->exec('REPLACE INTO '.$db->tableName(self::TABLE).' '.$select)) {
 			return $db->where(['note_id'=>$id])->delete('notes');
 		}
 
 		return false;
+	}
+
+	/**
+	 * 将回收站中的指定内容移回笔记列表中
+	 * 如果原分类不存在则移进默认分类中
+	 *
+	 * @param int $uid
+	 * @param int $id
+	 * @return bool
+	 */
+	public static function moveBack($uid, $id)
+	{
+		$db = UserData::db($uid);
+		$note = $db->from(self::TABLE)->where(['note_id'=>$id])->fetch();
+
+		if (!$note) {
+			return false;
+		}
+
+		unset($note['deleted_at']);
+
+		if ($db->insert(Note::TABLE, $note)) {
+			$db->where(['note_id'=>$id])->delete(self::TABLE);
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * 彻底删除回收站中的笔记
+	 *
+	 * @param int $uid
+	 * @param int $id
+	 * @return bool
+	 */
+	public static function delete($uid, $id)
+	{
+		$db = userDb($uid);
+		$db->where(['note_id'=>$id])->delete(self::TABLE);
+		NoteShare::cancel($uid, $id);
+		$db->where(['note_id'=>$id])->delete('note_history');
 	}
 
 }

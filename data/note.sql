@@ -49,6 +49,9 @@ CREATE TABLE IF NOT EXISTS `attachs` (
 CREATE INDEX IF NOT EXISTS `note_cate_id` ON `notes` (
 	`cate_id`
 );
+CREATE INDEX IF NOT EXISTS `history_note_id` ON `note_history` (
+	`note_id`
+);
 CREATE INDEX IF NOT EXISTS `attach_note_id` ON `attachs` (
 	`note_id`
 );

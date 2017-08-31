@@ -31,15 +31,6 @@ class IndexController extends \app\components\Controller
 		$this->render('index/workflow', compact('categories'));
 	}
 
-	public function user()
-	{
-		$app = getApp();
-
-		echo $app->user->getId();
-
-		print_r($this->user->info);
-	}
-
 	public function login()
 	{
 		$this->render('index/login');

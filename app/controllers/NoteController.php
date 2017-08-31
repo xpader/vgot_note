@@ -10,6 +10,7 @@ namespace app\controllers;
 
 use app\services\Category;
 use app\services\Note;
+use app\services\NoteHistory;
 use app\services\NoteShare;
 use app\services\User;
 use vgot\Exceptions\HttpNotFoundException;
@@ -143,6 +144,8 @@ class NoteController extends \app\components\Controller
 			$app->output->json(null);
 		}
 
+		$uid = $app->user->id;
+
 		$data = [
 			'note_id' => $id,
 			'cate_id' => $cateId ?: 1,
@@ -152,7 +155,10 @@ class NoteController extends \app\components\Controller
 			'updated_at' => time()
 		];
 
-		$id = Note::setNote($app->user->id, $data);
+		$id = Note::setNote($uid, $data);
+
+		//保存历史记录
+		NoteHistory::save($uid, $id, $data['updated_at']);
 
 		$app->output->json(['id'=>$id]);
 	}

@@ -45,3 +45,8 @@ function get_gravatar( $email, $s = 80, $d = 'mm', $r = 'g', $img = false, $atts
 	}
 	return $url;
 }
+
+function userDb($uid=null) {
+	$uid === null && $uid = getApp()->user->id;
+	return \app\services\UserData::db($uid);
+}

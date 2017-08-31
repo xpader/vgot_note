@@ -12,6 +12,8 @@ namespace app\services;
 class Note
 {
 
+	const TABLE = 'notes';
+
 	public static function fetchList($uid, $cateId=null)
 	{
 		$db = UserData::db($uid);
@@ -22,12 +24,6 @@ class Note
 			->from('notes n')
 			->leftJoin('note_share s', 'note_id')
 			->orderBy(['n.updated_at'=>SORT_DESC])->fetchAll();
-	}
-
-	public static function getNotes($uid)
-	{
-		$db = UserData::db($uid);
-		return $db->from('notes')->fetchAll();
 	}
 
 	public static function getNote($uid, $noteId)
@@ -73,6 +69,12 @@ class Note
 			$db->insert('notes', $data);
 			return $db->insertId();
 		}
+	}
+
+	public static function getTime($uid, $id)
+	{
+		$db = userDb($uid);
+		return $db->select('created_at,updated_at')->from(self::TABLE)->where(['note_id'=>$id])->fetch();
 	}
 
 	public static function purifier($html)
