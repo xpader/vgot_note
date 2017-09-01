@@ -17,7 +17,7 @@ class NoteHistory
 
 	const TABLE = 'note_history';
 	const MAX_NUM_PER_NOTE = 15; //每个笔记最多保存历史记录数量，超出后将删除多出的较早前的记录
-	const HISTORY_INTERNAL = 1200; //保存历史记录的时间间隔，上次修改距本此修改至少要达到这个间隔才会保存历史记录
+	const HISTORY_INTERVAL = 1200; //保存历史记录的时间间隔秒数，上次修改距本次修改至少要达到这个间隔才会保存历史记录
 
 	/**
 	 * 将指定笔记添加到历史记录中
@@ -41,7 +41,7 @@ class NoteHistory
 		}
 
 		//必须在指定时间间隔外
-		if ($updatedAt - $lastUpdated <= NoteHistory::HISTORY_INTERNAL) {
+		if ($updatedAt - $lastUpdated <= NoteHistory::HISTORY_INTERVAL) {
 			return false;
 		}
 
