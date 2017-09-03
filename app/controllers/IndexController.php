@@ -47,7 +47,7 @@ class IndexController extends \app\components\Controller
 			ajaxError('请输入用户名密码!');
 		}
 
-		$user = $app->db->from('user')->where(['username'=>$username])->fetch();
+		$user = $app->db->from('user')->where(['username'=>$username])->get();
 
 		if (!$user || !password_verify($password, $user['password'])) {
 			ajaxError('用户不存在或密码错误！');

@@ -8,6 +8,8 @@
 
 namespace app\services;
 
+use vgot\Database\DB;
+
 /**
  * 回收站服务
  * @package app\services
@@ -21,7 +23,43 @@ class Recylebin
 	{
 		$db = UserData::db($uid);
 		return $db->select('n.note_id,n.cate_id,n.title,n.summary,n.created_at,n.updated_at,n.deleted_at')
-			->from('note_recylebin', 'n')->orderBy(['n.updated_at'=>SORT_DESC])->fetchAll();
+			->from('note_recylebin', 'n')->orderBy(['n.deleted_at'=>SORT_DESC])->fetchAll();
+	}
+
+	/**
+	 * 遍历回收站中所有笔记的ID
+	 *
+	 * @param $uid
+	 * @param int $num 按删除时间从老到新获取指定数量
+	 * @return array
+	 */
+	public static function fetchAllIds($uid, $num=0)
+	{
+		$db = userDb($uid);
+		$db->from(self::TABLE)->select('note_id');
+
+		if ($num > 0) {
+			$db->limit($num)->orderBy(['deleted_at'=>SORT_ASC]);
+		}
+
+		$ids = [];
+
+		while ($row = $db->fetch(DB::FETCH_NUM)) {
+			$ids[] = $row[0];
+		}
+
+		return $ids;
+	}
+
+	/**
+	 * 统计回收站中笔记的数量
+	 *
+	 * @param int $uid
+	 * @return int
+	 */
+	public static function count($uid)
+	{
+		return userDb($uid)->from(self::TABLE)->count();
 	}
 
 	/**
@@ -61,7 +99,7 @@ class Recylebin
 	public static function moveBack($uid, $id)
 	{
 		$db = UserData::db($uid);
-		$note = $db->from(self::TABLE)->where(['note_id'=>$id])->fetch();
+		$note = $db->from(self::TABLE)->where(['note_id'=>$id])->get();
 
 		if (!$note) {
 			return false;
@@ -98,7 +136,7 @@ class Recylebin
 
 		//Todo: Delete Attachments
 
-		$db->where(['note_id'=>$id])->delete(self::TABLE);
+		return $db->where(['note_id'=>$id])->delete(self::TABLE);
 	}
 
 }

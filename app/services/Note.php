@@ -29,7 +29,7 @@ class Note
 	public static function getNote($uid, $noteId)
 	{
 		$db = UserData::db($uid);
-		return $db->from('notes')->where(['note_id'=>$noteId])->fetch();
+		return $db->from('notes')->where(['note_id'=>$noteId])->get();
 	}
 
 	/**
@@ -42,7 +42,7 @@ class Note
 	public static function checkExists($uid, $noteId)
 	{
 		$db = UserData::db($uid);
-		$note = $db->from('notes')->select('note_id')->where(['note_id'=>$noteId])->fetch();
+		$note = $db->from('notes')->select('note_id')->where(['note_id'=>$noteId])->get();
 		return (boolean)$note;
 	}
 
@@ -74,7 +74,7 @@ class Note
 	public static function getTime($uid, $id)
 	{
 		$db = userDb($uid);
-		return $db->select('created_at,updated_at')->from(self::TABLE)->where(['note_id'=>$id])->fetch();
+		return $db->select('created_at,updated_at')->from(self::TABLE)->where(['note_id'=>$id])->get();
 	}
 
 	public static function purifier($html)

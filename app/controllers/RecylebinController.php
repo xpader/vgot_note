@@ -9,6 +9,7 @@
 namespace app\controllers;
 
 use app\components\Controller;
+use app\services\Category;
 use app\services\Note;
 use app\services\Recylebin;
 
@@ -33,6 +34,9 @@ class RecylebinController extends Controller {
 		$app->output->json($notes);
 	}
 
+	/**
+	 * 移到回收站
+	 */
 	public function remove()
 	{
 		$app = getApp();
@@ -46,6 +50,73 @@ class RecylebinController extends Controller {
 			ajaxSuccess();
 		} else {
 			ajaxError('移动到回收站失败');
+		}
+	}
+
+	/**
+	 * 恢复笔记
+	 */
+	public function restore()
+	{
+		$app = getApp();
+		$id = $app->input->post('id', null, FILTER_SANITIZE_NUMBER_INT);
+
+		if (!$id) {
+			ajaxError('参数错误');
+		}
+
+		if (Recylebin::moveBack($app->user->id, $id)) {
+			$category = Category::getNoteCategory($app->user->id, $id);
+			ajaxSuccess('已恢复至'.$category['name']);
+		} else {
+			ajaxError('恢复失败');
+		}
+	}
+
+	/**
+	 * 彻底删除
+	 */
+	public function delete()
+	{
+		$app = getApp();
+		$id = $app->input->post('id', null, FILTER_SANITIZE_NUMBER_INT);
+
+		if (!$id) {
+			ajaxError('参数错误');
+		}
+
+		if (Recylebin::delete($app->user->id, $id)) {
+			ajaxSuccess();
+		} else {
+			ajaxError('删除失败！');
+		}
+	}
+
+	/**
+	 * 清空回收站
+	 */
+	public function clean()
+	{
+		$app = getApp();
+
+		$recylebinIds = Recylebin::fetchAllIds($app->user->id);
+
+		if (!$recylebinIds) {
+			ajaxError('回收站是空的');
+		}
+
+		$failedIds = [];
+
+		foreach ($recylebinIds as $id) {
+			if (!Recylebin::delete($app->user->id, $id)) {
+				$failedIds[] = $id;
+			}
+		}
+
+		if (!$failedIds) {
+			ajaxSuccess();
+		} else {
+			ajaxSuccess('笔记 '.join(',', $failedIds).' 删除失败');
 		}
 	}
 

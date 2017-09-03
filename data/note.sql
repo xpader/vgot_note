@@ -46,6 +46,9 @@ CREATE TABLE IF NOT EXISTS `attachs` (
 	`path`	TEXT NOT NULL,
 	`add_time`	INTEGER NOT NULL
 );
+CREATE INDEX IF NOT EXISTS `recylebin_deleted_at` ON `note_recylebin` (
+	`deleted_at`	DESC
+);
 CREATE INDEX IF NOT EXISTS `note_cate_id` ON `notes` (
 	`cate_id`
 );

@@ -47,7 +47,7 @@ class NoteHistory
 
 		$db = userDb($uid);
 		$note = $db->select('note_id,cate_id,title,summary,content,updated_at')
-			->from(Note::TABLE)->where(['note_id'=>$id])->fetch();
+			->from(Note::TABLE)->where(['note_id'=>$id])->get();
 
 		if (!$note) return false;
 
@@ -88,7 +88,7 @@ class NoteHistory
 	public static function getLastHistory($uid, $id)
 	{
 		$db = userDb($uid);
-		return $db->from(self::TABLE)->where(['note_id'=>$id])->orderBy(['id'=>SORT_DESC])->limit(1)->fetch();
+		return $db->from(self::TABLE)->where(['note_id'=>$id])->orderBy(['id'=>SORT_DESC])->limit(1)->get();
 	}
 
 	public static function clearHistory($uid, $id)

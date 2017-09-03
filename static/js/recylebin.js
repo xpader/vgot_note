@@ -17,7 +17,7 @@ function showNoteList() {
 			+ '<li><a href="javascript:;" data-action="restore"><i class="fa fa-recycle"></i>恢复</a></li>'
 			+ '<li><a href="javascript:;" data-action="delete"><i class="fa fa-remove"></i>彻底删除</a></li>'
 			+ '<li role="separator" class="divider"></li>'
-			+ '<li><a href="javascript:;" data-action="empty"><i class="fa fa-eraser"></i>清空回收站</a></li>'
+			+ '<li><a href="javascript:;" data-action="empty"><i class="glyphicon glyphicon-floppy-remove"></i>清空回收站</a></li>'
 			+ '<li role="separator" class="divider"></li>'
 			+ '<li class="dropdown-header">{updated_at}</li>'
 			+ '</ul></div>';
@@ -54,9 +54,9 @@ $(function() {
 					cancelButtonText: '取消'
 				}).then(function () {
 					return new Promise(function(resolve, reject) {
-						$.post(BASE_URL + "?app=share/share", {id:id}, function(res) {
+						$.post(BASE_URL + "?app=recylebin/restore", {id:id}, function(res) {
 							if (res.status) {
-								resolve(res.data);
+								resolve(res.msg);
 							} else {
 								reject(res.msg);
 							}
@@ -64,8 +64,8 @@ $(function() {
 					});
 				}).then(function(data) {
 					swal(
-						'分享成功!',
-						'分享网址: <span>' + data.url + '</span>',
+						'恢复成功!',
+						data,
 						'success'
 					);
 					showNoteList();
@@ -74,7 +74,7 @@ $(function() {
 			case "delete":
 				swal({
 					title: '删除笔记',
-					text: "彻底删除该笔记后将无法恢复？",
+					text: "将把该笔记永远删除无法恢复，确定吗？",
 					type: 'warning',
 					showCancelButton: true,
 					confirmButtonText: '确定',
@@ -83,7 +83,7 @@ $(function() {
 					allowEnterKey: false
 				}).then(function () {
 					return new Promise(function(resolve, reject) {
-						$.post(BASE_URL + "?app=recylebin/remove", {id:id}, function(res) {
+						$.post(BASE_URL + "?app=recylebin/delete", {id:id}, function(res) {
 							if (res.status) {
 								resolve(res.data);
 							} else {
@@ -93,9 +93,9 @@ $(function() {
 					});
 				}).then(function(data) {
 					swal({
-						title: '删除成功',
+						title: '已彻底删除',
 						type: 'success',
-						timer: 2000
+						timer: 1500
 					}).catch($.noop);
 
 					showNoteList();
@@ -117,9 +117,9 @@ $(function() {
 					allowEnterKey: false
 				}).then(function () {
 					return new Promise(function(resolve, reject) {
-						$.post(BASE_URL + "?app=share/cancel", {id:id}, function(res) {
+						$.post(BASE_URL + "?app=recylebin/clean", {}, function(res) {
 							if (res.status) {
-								resolve(res.data);
+								resolve(res.msg);
 							} else {
 								reject(res.msg);
 							}
@@ -127,9 +127,10 @@ $(function() {
 					});
 				}).then(function(data) {
 					swal({
-						title: '已取消分享',
+						title: data == '' ? '部分清空回收站' : '已清空回收站',
+						text: data == '' ? null : data,
 						type: 'success',
-						timer: 1000
+						timer: 2000
 					}).catch($.noop);
 					showNoteList();
 				}, $.noop);

@@ -147,7 +147,7 @@ class User
 	public static function findById($id)
 	{
 		$app = getApp();
-		return $app->db->from('user')->where(['uid'=>$id])->fetch();
+		return $app->db->from('user')->where(['uid'=>$id])->get();
 	}
 
 	/**
@@ -175,7 +175,7 @@ class User
 		list($id, $hash, $loginIp, $loginTime) = $data;
 
 		$user = $app->db->select('uid,username,mail,hash,regip,regtime,last_login_ip,last_login_time')
-			->from('user')->where(['uid'=>$id, 'hash'=>$hash])->fetch();
+			->from('user')->where(['uid'=>$id, 'hash'=>$hash])->get();
 
 		return compact('id', 'loginIp', 'loginTime', 'user');
 	}
