@@ -18,7 +18,7 @@ $this->render('common/header');
 
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper">
-		<div class="row content-wrapper" style="margin-left:0;z-index:auto;">
+		<div class="row" style="height:100%;">
 			<div class="col-xs-3 hidden-xs note-list">
 				<div class="box box-note">
 					<div class="box-header with-border">

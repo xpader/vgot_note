@@ -86,9 +86,12 @@ class Recylebin
 	public static function delete($uid, $id)
 	{
 		$db = userDb($uid);
-		$db->where(['note_id'=>$id])->delete(self::TABLE);
 		NoteShare::cancel($uid, $id);
 		NoteHistory::clearHistory($uid, $id);
+
+		//Todo: Delete Attachments
+
+		$db->where(['note_id'=>$id])->delete(self::TABLE);
 	}
 
 }

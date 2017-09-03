@@ -268,21 +268,13 @@ $(function() {
 		saveNote(true, true);
 	};
 
-	//自动调试调整
-	var navBarHeight = $(".navbar-static-top").height();
-	var wrapper = $(".content-wrapper");
-
-	function adjustContainerHeight() {
-		var wh = $(window).height() - navBarHeight;
-		wrapper.height(wh+"px");
-
+	heightAdjustCallback.add(function(wh) {
 		var listBox = $("#noteList").parent();
 		listBox.height(wh - listBox.prev(".box-header").outerHeight());
 
 		adjustEditor();
-	}
 
-	$(window).resize(adjustContainerHeight);
-	adjustContainerHeight();
+		console.log(wh);
+	});
 
 });

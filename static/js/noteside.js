@@ -118,9 +118,14 @@ function showCategoryFolders(trigger) {
 			}
 		});
 
-		if (trigger == undefined || trigger) {
-			//folders.eq(0).find("a[data-cid]").trigger("click");
-			folders.find("a[data-cid=" + currentCateId + "]").trigger("click");
+		if (inWorkflow()) {
+			var currentLink = folders.find("a[data-cid=" + currentCateId + "]");
+
+			if (trigger == undefined || trigger) {
+				currentLink.trigger("click");
+			} else {
+				currentLink.parent().addClass("active");
+			}
 		}
 	});
 }
@@ -174,10 +179,7 @@ $(function() {
 		var wh = $(window).height() - navBarHeight;
 		wrapper.height(wh+"px");
 
-		var listBox = $("#noteList").parent();
-		listBox.height(wh - listBox.prev(".box-header").outerHeight());
-
-		adjustEditor();
+		heightAdjustCallback.fire(wh);
 	}
 
 	$(window).resize(adjustContainerHeight);
