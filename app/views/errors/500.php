@@ -9,14 +9,11 @@
  */
 
 $this->title = htmlspecialchars($exception->getMessage());
-$this->render('common/header');
+$this->render('common/header', ['bodyClass'=>'sidebar-collapse', 'commonPlugins'=>false]);
 ?>
-<body class="hold-transition skin-blue sidebar-collapse">
 <div class="wrapper">
 
-	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper">
-		<!-- Main content -->
 		<section class="content">
 
 			<div class="error-page">
@@ -31,17 +28,13 @@ $this->render('common/header');
 					</p>
 				</div>
 			</div>
-			<!-- /.error-page -->
 
 		</section>
-		<!-- /.content -->
 		<pre><?php throw $exception; ?></pre>
 	</div>
 
 </div>
-<!-- ./wrapper -->
 
-<!-- Bootstrap 3.3.7 -->
 <script src="<?=STATIC_URL?>lib/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

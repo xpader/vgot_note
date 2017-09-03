@@ -8,14 +8,13 @@ function showNoteList() {
 	// var noteLoading = $("#noteLoading").show();
 
 	$.get(url).done(function(res) {
-		var html = '';
-
 		var cateName = res.category ? res.category.name : "我的笔记";
 		var count = res.notes.length;
 		$("#noteListTitle").html(cateName);
 		$("#noteListCount").html(count);
 
-		var dropdown = '<div class="note-list-action dropdown">'
+		var html = '',
+			dropdown = '<div class="note-list-action dropdown">'
 			+ '<a href="javascript:;" title="更多操作" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="dropdown-toggle">'
 			+ '<i class="glyphicon glyphicon-option-vertical"></i>'
 			+ '</a> <ul class="dropdown-menu dropdown-menu-right">'
@@ -176,7 +175,7 @@ $(function() {
 				swal({
 					title: '删除笔记',
 					text: "将该笔记移动到回收站？",
-					type: 'warning',
+					type: 'question',
 					showCancelButton: true,
 					confirmButtonText: '确定',
 					cancelButtonText: '取消'
@@ -211,7 +210,7 @@ $(function() {
 				swal({
 					title: '分享笔记',
 					text: "共享该笔记后，他人将可通过链接查看笔记内容。",
-					type: 'warning',
+					type: 'question',
 					showCancelButton: true,
 					confirmButtonText: '确定',
 					cancelButtonText: '取消'
@@ -271,10 +270,7 @@ $(function() {
 	heightAdjustCallback.add(function(wh) {
 		var listBox = $("#noteList").parent();
 		listBox.height(wh - listBox.prev(".box-header").outerHeight());
-
 		adjustEditor();
-
-		console.log(wh);
 	});
 
 });

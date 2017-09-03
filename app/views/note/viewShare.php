@@ -11,9 +11,8 @@
  */
 
 $this->title = $note['title'];
-$this->render('common/header');
+$this->render('common/header', ['bodyClass'=>'sidebar-collapse']);
 ?>
-<body class="skin-blue sidebar-collapse">
 <input type="hidden" id="content" value="<?=htmlspecialchars($note['content'])?>">
 <div class="content-wrapper" style="min-height: 1126px;">
 	<div class="container">

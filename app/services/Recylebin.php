@@ -17,6 +17,13 @@ class Recylebin
 
 	const TABLE = 'note_recylebin';
 
+	public static function fetchList($uid)
+	{
+		$db = UserData::db($uid);
+		return $db->select('n.note_id,n.cate_id,n.title,n.summary,n.created_at,n.updated_at,n.deleted_at')
+			->from('note_recylebin', 'n')->orderBy(['n.updated_at'=>SORT_DESC])->fetchAll();
+	}
+
 	/**
 	 * 将指定笔记移进回收站
 	 *

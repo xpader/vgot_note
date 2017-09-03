@@ -19,6 +19,20 @@ class RecylebinController extends Controller {
 		$this->render('note/recylebin');
 	}
 
+	public function getList()
+	{
+		$app = getApp();
+		$notes = Recylebin::fetchList($app->user->id);
+
+		array_walk($notes, function(&$row) {
+			$row['created_at'] = date('Y-m-d H:i:s', $row['created_at']);
+			$row['updated_at'] = date('Y-m-d H:i:s', $row['updated_at']);
+			$row['deleted_at'] = date('Y-m-d H:i:s', $row['deleted_at']);
+		});
+
+		$app->output->json($notes);
+	}
+
 	public function remove()
 	{
 		$app = getApp();

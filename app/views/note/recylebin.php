@@ -24,8 +24,8 @@ $this->render('common/header');
 					<div class="box-header with-border">
 						<h3 class="box-title">
 							<span id="noteListTitle">回收站</span>
-							<small><span id="noteListCount">*</span> 个笔记</small>
-							<i class="fa fa-refresh fa-spin" id="noteLoading" style="color:#555;display:none;"></i>
+							<small><span id="noteListCount">*</span> 个已删除的笔记</small>
+							<i class="fa fa-circle-o-notch fa-spin" id="noteLoading" style="color:#555;display:none;"></i>
 						</h3>
 					</div>
 					<div class="box-body no-padding">
@@ -41,6 +41,10 @@ $this->render('common/header');
 		</div>
 	</div>
 	<script src="<?=STATIC_URL?>js/noteside.js"></script>
+	<script src="<?=STATIC_URL?>js/recylebin.js"></script>
+	<script type="text/javascript">
+	var currentNoteId = 0;
+	</script>
 </div>
 
 <?php $this->render('common/footer'); ?>

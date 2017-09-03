@@ -106,7 +106,8 @@ function showCategoryFolders(trigger) {
 						showCancelButton: true,
 						confirmButtonColor: '#d33',
 						confirmButtonText: '删除 “' +　origName +'”',
-						cancelButtonText: '取消'
+						cancelButtonText: '取消',
+						allowEnterKey: false
 					}).then(function () {
 						swal(
 							'Deleted!',
@@ -183,6 +184,7 @@ $(function() {
 	}
 
 	$(window).resize(adjustContainerHeight);
-	adjustContainerHeight();
+
+	setTimeout(adjustContainerHeight, 0);
 
 });
