@@ -18,7 +18,7 @@ $this->render('common/header');
 
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper">
-		<div class="row" style="height:100%;">
+		<div class="row content-wrapper" style="margin-left:0;z-index:auto;">
 			<div class="col-xs-3 hidden-xs note-list">
 				<div class="box box-note">
 					<div class="box-header with-border">
@@ -40,13 +40,7 @@ $this->render('common/header');
 			</div>
 		</div>
 	</div>
-	<?php //$this->render('common/bottom'); ?>
+	<script src="<?=STATIC_URL?>js/noteside.js"></script>
 </div>
-<!-- ./wrapper -->
 
-<!-- Bootstrap 3.3.7 -->
-<script src="<?=STATIC_URL?>lib/bootstrap/js/bootstrap.min.js"></script>
-<!-- AdminLTE App -->
-<script src="<?=STATIC_URL?>lib/alte/js/adminlte.min.js"></script>
-</body>
-</html>
+<?php $this->render('common/footer'); ?>

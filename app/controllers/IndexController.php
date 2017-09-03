@@ -28,7 +28,8 @@ class IndexController extends \app\components\Controller
 	public function index()
 	{
 		$app = getApp();
-		$this->render('index/workflow', compact('categories'));
+		$cid = $app->input->get('cid', 1);
+		$this->render('index/workflow', compact('cid'));
 	}
 
 	public function login()

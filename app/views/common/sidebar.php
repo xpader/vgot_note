@@ -3,7 +3,7 @@ use vgot\Web\Url;
 $controller = getApp()->input->uri('controller');
 ?>
 <!-- Left side column. contains the logo and sidebar -->
-<aside class="main-sidebar">
+<aside class="main-sidebar note-sidebar">
 	<!-- sidebar: style can be found in sidebar.less -->
 	<section class="sidebar">
 		<!-- search form -->

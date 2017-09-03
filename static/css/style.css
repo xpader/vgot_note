@@ -1,3 +1,5 @@
+.note-sidebar {padding-top:0; top:50px; bottom:0; min-height:0; overflow-y:auto;}
+
 .box-note, .box-info {border-top:none; border-radius:0;}
 .box-info {border-bottom:none; border-top:none; margin:0;}
 .note-list {padding-right:0; background-color:#F7F7F7; border-right:1px solid #eaeaea;}

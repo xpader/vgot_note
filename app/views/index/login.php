@@ -2,14 +2,12 @@
 use vgot\Web\Url;
 
 $this->title = 'Login';
-$this->render('common/header');
+$this->render('common/header', ['bodyClass'=>'login-page', 'commonPlugins'=>false]);
 ?>
-<body class="hold-transition login-page">
 <div class="login-box">
 	<div class="login-logo">
 		<a href="#"><b>Vgot</b>NOTE</a>
 	</div>
-	<!-- /.login-logo -->
 	<div class="login-box-body">
 		<p class="login-box-msg">Sign in to start your session</p>
 
@@ -30,11 +28,9 @@ $this->render('common/header');
 						</label>
 					</div>
 				</div>
-				<!-- /.col -->
 				<div class="col-xs-4">
 					<button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
 				</div>
-				<!-- /.col -->
 			</div>
 		</form>
 
@@ -42,13 +38,8 @@ $this->render('common/header');
 		<a href="register.html" class="text-center">Register a new membership</a>
 
 	</div>
-	<!-- /.login-box-body -->
 </div>
-<!-- /.login-box -->
 
-<!-- Bootstrap 3.3.7 -->
-<script src="<?=STATIC_URL?>lib/bootstrap/js/bootstrap.min.js"></script>
-<!-- iCheck -->
 <script src="<?=STATIC_URL?>lib/iCheck/icheck.min.js"></script>
 <script>
 $(function () {
@@ -73,6 +64,5 @@ $(function () {
 	});
 });
 </script>
-</body>
-</html>
+<?php $this->render('common/footer'); ?>
 

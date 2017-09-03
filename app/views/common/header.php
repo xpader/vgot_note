@@ -1,10 +1,16 @@
 <?php
 /**
  * @var $this \vgot\Core\View
+ * @var $bodyClass string
+ * @var $commonPlugins bool
  */
 use vgot\Web\Url;
 
 $app = getApp();
+
+if (!isset($bodyClass)) {
+	$bodyClass = 'skin-blue sidebar-mini';
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -35,11 +41,14 @@ $app = getApp();
 <script src="<?=STATIC_URL?>lib/jquery.min.js"></script>
 <!-- Google Font -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+<?php if (!isset($commonPlugins) || $commonPlugins !== false) { ?>
 <link rel="stylesheet" href="<?=STATIC_URL?>lib/pace/pace.css">
 <script src="<?=STATIC_URL?>lib/pace/pace.min.js"></script>
 <script src="<?=STATIC_URL?>lib/sweetalert2/sweetalert2.min.js"></script>
 <link rel="stylesheet" type="text/css" href="<?=STATIC_URL?>lib/sweetalert2/sweetalert2.min.css">
+<?php } ?>
 <script type="text/javascript">
 var BASE_URL = "<?=Url::base()?>";
 </script>
 </head>
+<body class="hold-transition <?=$bodyClass?>">

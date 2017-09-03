@@ -3,6 +3,11 @@
  */
 var folderLoading = $("#folderLoading");
 var categoryFolders = $("#categoryFolders");
+var heightAdjustCallback = $.Callbacks();
+
+function inWorkflow() {
+	return (typeof currentCateId != 'undefined');
+}
 
 function getFolders() {
 	return categoryFolders.nextUntil(folderLoading, "li");
@@ -43,11 +48,15 @@ function showCategoryFolders(trigger) {
 				return;
 			}
 
-			toggleFocus(fd);
-			toggleFocus(folders.filter(".active").not(fd));
+			if (inWorkflow()) {
+				toggleFocus(fd);
+				toggleFocus(folders.filter(".active").not(fd));
 
-			currentCateId = cid;
-			showNoteList();
+				currentCateId = cid;
+				showNoteList();
+			} else {
+				location.href = BASE_URL + "?cid=" + cid;
+			}
 		});
 
 		folders.on("click", ".dropdown-menu a[data-action]", function() {
@@ -115,3 +124,63 @@ function showCategoryFolders(trigger) {
 		}
 	});
 }
+
+$(function() {
+
+	showCategoryFolders(inWorkflow());
+
+	//新建按钮
+	$("#newCate").click(function() {
+		swal({
+			title: '新建分类',
+			input: 'text',
+			showCancelButton: true,
+			confirmButtonText: '创建',
+			cancelButtonText: '取消',
+			showLoaderOnConfirm: true,
+			preConfirm: function (name) {
+				return new Promise(function (resolve, reject) {
+					name = $.trim(name);
+					if (name == "") {
+						reject("请输入分类名称！");
+						return;
+					}
+
+					$.post(BASE_URL + "?app=category/create", {name:name}, function(res) {
+						if (res.status) {
+							resolve(res.data);
+						} else {
+							reject(res.msg);
+						}
+					});
+				});
+			},
+			allowOutsideClick: false
+		}).then(function(data) {
+			currentCateId = data.cate_id;
+			showCategoryFolders();
+		}, $.noop);
+	});
+
+	$("#newNote").click(function() {
+		loadNote(0);
+	});
+
+	//自动调试调整
+	var navBarHeight = $(".navbar-static-top").height();
+	var wrapper = $(".content-wrapper");
+
+	function adjustContainerHeight() {
+		var wh = $(window).height() - navBarHeight;
+		wrapper.height(wh+"px");
+
+		var listBox = $("#noteList").parent();
+		listBox.height(wh - listBox.prev(".box-header").outerHeight());
+
+		adjustEditor();
+	}
+
+	$(window).resize(adjustContainerHeight);
+	adjustContainerHeight();
+
+});
