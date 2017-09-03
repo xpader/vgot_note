@@ -111,7 +111,7 @@ $(function() {
 					text: '回收站中的所有笔记将被彻底删除，无法恢复。',
 					type: 'error',
 					showCancelButton: true,
-					confirmButtonText: '确定',
+					confirmButtonText: '清空回收站',
 					cancelButtonText: '取消',
 					confirmButtonColor: '#d33',
 					allowEnterKey: false
