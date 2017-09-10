@@ -26,6 +26,12 @@ class Recylebin
 			->from('note_recylebin', 'n')->orderBy(['n.deleted_at'=>SORT_DESC])->fetchAll();
 	}
 
+	public static function getNote($uid, $id)
+	{
+		$db = userDb($uid);
+		return $db->from('note_recylebin')->where(['note_id'=>$id])->get();
+	}
+
 	/**
 	 * 遍历回收站中所有笔记的ID
 	 *

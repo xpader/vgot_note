@@ -35,6 +35,24 @@ class RecylebinController extends Controller {
 	}
 
 	/**
+	 * 获取单个回收站中笔记详情
+	 */
+	public function getNote()
+	{
+		$app = getApp();
+		$noteId = $app->input->get('id');
+		$type = $app->input->get('type', 'html');
+
+		$note = $noteId ? Recylebin::getNote($app->user->id, $noteId) : null;
+
+		if ($note) {
+			$note['updated_at'] = date('Y-m-d H:i:s', $note['updated_at']);
+		}
+
+		$app->output->json($note);
+	}
+
+	/**
 	 * 移到回收站
 	 */
 	public function remove()

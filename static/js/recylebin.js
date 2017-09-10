@@ -1,7 +1,7 @@
 /**
  * Created by pader on 2017/9/3.
  */
-var NoteList = $("#noteList");
+var NoteList = $("#noteList"), NoteBox = $("#noteBox"), NoteHeader = $("#noteHeader");
 
 function showNoteList() {
 	var url = BASE_URL + "?app=recylebin/get-list";
@@ -35,8 +35,35 @@ function showNoteList() {
 	});
 }
 
+function loadNote(noteId) {
+	if (noteId == currentNoteId) {
+		return;
+	}
+
+	$.get(BASE_URL + "?app=recylebin/get-note&id=" + noteId).done(function(data) {
+		NoteHeader.find("span").text(data.title);
+		NoteHeader.find("small").text(data.updated_at);
+		setContent(data.content);
+		NoteBox.show();
+		currentNoteId = data.note_id;
+	});
+}
+
 $(function() {
 	showNoteList();
+
+	NoteList.on("click", "li[data-id]>a", function() {
+		var nav = $(this).parent("li");
+		var id = nav.data("id");
+
+		if (nav.is(".active")) {
+			return;
+		}
+
+		NoteList.find(">.active").removeClass("active");
+		nav.addClass("active");
+		loadNote(id);
+	});
 
 	NoteList.on("click", ".dropdown-menu a[data-action]", function() {
 		var nav = $(this).closest("li[data-id]"),
@@ -142,5 +169,7 @@ $(function() {
 	heightAdjustCallback.add(function(wh) {
 		var listBox = $("#noteList").parent();
 		listBox.height(wh - listBox.prev(".box-header").outerHeight());
+
+		NoteBox.find(".note-body").height(wh - NoteHeader.outerHeight());
 	});
 });

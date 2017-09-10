@@ -19,7 +19,8 @@
 .editor-icon {font-size:120px; color:#AAA; position:absolute; left:50%; top:50%; margin-left:-60px; margin-top:-60px;}
 .box-note {border:none; min-height:100%; margin:0;}
 .note-header {position:relative;}
-.note-header .form-control {border:none; font-size:16px; height:45px;}
+.note-header .form-control, .note-header span {border:none; font-size:16px; height:45px;}
+.note-header span {padding:6px 12px; display:block; border-bottom:1px solid #D1D1D1; line-height:33px;}
 .note-header small {position:absolute; right:12px; top:14px; color:#b3b3b3;}
 .note-body {}
 
