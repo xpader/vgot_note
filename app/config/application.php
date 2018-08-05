@@ -13,15 +13,23 @@ return [
 
 	//The providers to register
 	'providers' => [
-		'security' => ['vgot\Core\Security', ['KF9cOBGhvVOekAK7n6Ei']],
-		'cache' => ['vgot\Cache\FileCache', [
+		'security' => [
+			'class' => 'vgot\Core\Security',
+			'arguments' => ['KF9cOBGhvVOekAK7n6Ei']
+		],
+		'cache' => [
+			'class' => 'vgot\Cache\FileCache', 
+			'arguments' => [
 				[
 					'stor_dir' => DATA_DIR.'/cache',
 					'cache_in_memory' => true
 				]
 			]
 		],
-		'user' => ['app\components\User', ['vnote_grant', 86400*7, true]]
+		'user' => [
+			'class' => 'app\components\User',
+			'arguments' => ['vnote_grant', 86400*7, true]
+		]
 	],
 
 	//Output

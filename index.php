@@ -15,7 +15,7 @@ define('DATA_DIR', __DIR__.'/data');
 ini_set('display_errors', 'On');
 ini_set('error_reporting', E_ALL);
 
-require __DIR__.'/../vgot_framework/src/vgot/Boot.php';
+require __DIR__.'/../vgot_framework/src/framework/Boot.php';
 require __DIR__.'/vendor/autoload.php';
 
 Boot::addNamespaces([

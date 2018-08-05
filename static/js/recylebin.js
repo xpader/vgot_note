@@ -40,6 +40,8 @@ function loadNote(noteId) {
 		return;
 	}
 
+	heightAdjustCallback.fire();
+
 	$.get(BASE_URL + "?app=recylebin/get-note&id=" + noteId).done(function(data) {
 		NoteHeader.find("span").text(data.title);
 		NoteHeader.find("small").text(data.updated_at);
@@ -50,6 +52,13 @@ function loadNote(noteId) {
 }
 
 $(function() {
+	heightAdjustCallback.add(function(wh) {
+		var listBox = $("#noteList").parent();
+		listBox.height(wh - listBox.prev(".box-header").outerHeight());
+
+		NoteBox.find(".note-body").height(wh - NoteHeader.outerHeight());
+	});
+
 	showNoteList();
 
 	NoteList.on("click", "li[data-id]>a", function() {
@@ -165,11 +174,4 @@ $(function() {
 		}
 	});
 
-
-	heightAdjustCallback.add(function(wh) {
-		var listBox = $("#noteList").parent();
-		listBox.height(wh - listBox.prev(".box-header").outerHeight());
-
-		NoteBox.find(".note-body").height(wh - NoteHeader.outerHeight());
-	});
 });
