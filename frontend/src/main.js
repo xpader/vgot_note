@@ -6,7 +6,7 @@ import './include/base';
 Vue.config.productionTip = false;
 
 //import './assets/css/style.css';
-import 'iview/dist/styles/iview.css';
+import 'muse-ui/dist/muse-ui.css';
 
 window.App = new Vue({
 	el: '#app',

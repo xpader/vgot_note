@@ -11,10 +11,10 @@
   "plugins": [
     "transform-vue-jsx",
     "transform-runtime",
-    ,
     ["import", {
-      "libraryName": "iview",
-      "libraryDirectory": "src/components"
-    }]
+		"libraryName": "muse-ui",
+		"libraryDirectory": "lib",
+		"camel2DashComponentName": false
+	}]
   ]
 }
