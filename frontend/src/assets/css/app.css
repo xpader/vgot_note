@@ -1,9 +1,0 @@
-.slide-left-leave-active {transition: all 10s ease; transform:translate(-100%, 0);}
-.slide-left-enter-active {transition: all 10s ease; transform:translate(0, 0);}
-.slide-left-enter {transform:translate(100%, 0);}
-.slide-left-leave {transform:translate(0, 0);}
-
-.slide-right-leave-active {transition: all 10s ease; transform:translate(0, 0);}
-.slide-right-enter-active {transition: all 10s ease; transform:translate(100%, 0);}
-.slide-right-enter {transform:translate(0, 0);}
-.slide-right-leave {transform:translate(100%, 0);}
