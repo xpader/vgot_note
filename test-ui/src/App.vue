@@ -12,3 +12,8 @@ export default {
 	}
 }
 </script>
+
+<style>
+html, body {height:100%; overflow:hidden;}
+.scrollable-y {overflow-y:auto;}
+</style>
