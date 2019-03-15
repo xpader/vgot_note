@@ -93,7 +93,7 @@ class NoteController extends \app\components\Controller
 
 			if ($row['share']) {
 				if ($row['share_expires']) {
-					$row['share'] = $row['share_expire'] > $now ? 2 : -1; //2 尚未过期，-1 已经过期
+					$row['share'] = $row['share_expires'] > $now ? 2 : -1; //2 尚未过期，-1 已经过期
 					$row['share_expires'] = date('Y-m-d H:i:s', $row['share_expires']);
 				} else {
 					$row['share'] = 1;
