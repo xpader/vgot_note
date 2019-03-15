@@ -1,5 +1,5 @@
 <template>
-	<v-app class="overflow-hidden fill-height" dark>
+	<v-app class="overflow-hidden fill-height">
 		<v-navigation-drawer app clipped width="220" class="fill-height" :value="showMenu">
 			<v-list class="fill-height scroll-y">
 				<v-list-tile @click="">
@@ -102,85 +102,9 @@
 							</template>
 						</v-list>
 					</v-flex>
-					<v-flex xs9 class="scroll-y">
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
-						<p>Hello World</p>
+					<v-flex xs9 class="note-area">
+						<v-text-field label="笔记标题" single-line full-width hide-details prepend-inner-icon="note" solo flat></v-text-field>
+						<textarea name="content" id="editor"></textarea>
 					</v-flex>
 				</v-layout>
 			</v-container>
@@ -190,6 +114,8 @@
 </template>
 
 <script>
+	import CKEditor from '@ckeditor/ckeditor5-build-classic';
+
 export default {
 	name: 'note-layout',
 	data() {
@@ -263,7 +189,21 @@ export default {
 		};
 	},
 	mounted() {
+		CKEditor
+			.create( document.querySelector( '#editor' ) )
+			.then( editor => {
+				console.log( editor );
+			} )
+			.catch( error => {
+				console.error( error );
+			} );
 	},
 	components: {}
 }
 </script>
+
+<style>
+	.note-area {
+		border-left: 1px solid #e0e0e0;
+	}
+</style>
